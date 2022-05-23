@@ -26,11 +26,12 @@ export type usersFriendType = {
 
 export type StatePropsType = {
     profilePage: {
+        messageForNewPost: string
         dialogsData: Array<DiaologPropsType>
         postData: Array<PostDataTypes>
     },
     messagePage: {
-        message:Array<MessageTypeText>
+        message: Array<MessageTypeText>
     },
     sidebar: {
         usersFriend: Array<string>
@@ -39,8 +40,9 @@ export type StatePropsType = {
 }
 
 
-let state : StatePropsType = {
+let state: StatePropsType = {
     profilePage: {
+        messageForNewPost: '',
         postData: [
             {id: 1, message: 'Hi it work111 ', likesCount: 12},
             {id: 2, message: 'Hi it work222', likesCount: 100},
@@ -74,6 +76,12 @@ export const addPost = (postText: string) => {
         likesCount: 0
     }
     state.profilePage.postData.push(newPost)
+    renderTree(state)
+    state.profilePage.messageForNewPost = ''
+}
+
+export const changeNewText = (newText: string) => {
+    state.profilePage.messageForNewPost = newText
     renderTree(state)
 }
 

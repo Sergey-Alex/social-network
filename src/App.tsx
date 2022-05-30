@@ -8,16 +8,15 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import {BrowserRouter, Route} from 'react-router-dom';
-import {addPost, changeNewText, DiaologPropsType, MessageTypeText, PostDataTypes, StatePropsType} from "./redux/state";
+import {StoreType} from "./redux/state";
 
 
 export type AppProps = {
-    state: StatePropsType,
-    addPost: (t: string) => void
-    changeNewText: (text: string) => void
+    store: StoreType
 }
 
 function App(props: AppProps) {
+    const state = props.store.getState()
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
@@ -25,21 +24,18 @@ function App(props: AppProps) {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs'
-                           render={() => <Dialogs dialogsData={props.state.profilePage.dialogsData}
-                                                  message={props.state.messagePage.message}/>}/>
+                           render={() => <Dialogs dialogsData={state.profilePage.dialogsData}
+                                                  message={state.messagePage.message}/>}/>
                     <Route path='/profile' render={() => <Profile
-                        message={props.state.profilePage.messageForNewPost}
-                        addPost={props.addPost}
-                        postData={props.state.profilePage.postData}
-                        changeNewText={props.changeNewText}
+                        message={state.profilePage.messageForNewPost}
+                        addPost={props.store.addPost.bind(props.store)}
+                        postData={state.profilePage.postData}
+                        changeNewText={props.store.changeNewText.bind(props.store)}
                     />}
                     />
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
-                    <div>
-                        <div className='friends'>{props.state.sidebar.usersFriend}</div>
-                    </div>
                 </div>
             </div>
         </BrowserRouter>

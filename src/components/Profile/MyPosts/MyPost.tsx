@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import classes from './MyPost.module.css'
 import Post from "./Post/Post";
-import {addPost, PostDataTypes} from "../../../redux/state";
+import {PostDataTypes} from "../../../redux/state";
 
 
 

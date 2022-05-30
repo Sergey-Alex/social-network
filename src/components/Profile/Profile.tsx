@@ -1,7 +1,7 @@
 import React from 'react';
 import MyPost from "./MyPosts/MyPost";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {addPost, changeNewText, PostDataTypes} from "../../redux/state";
+import {PostDataTypes} from "../../redux/state";
 
 type ProfilePostData = {
     postData: Array<PostDataTypes>

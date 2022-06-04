@@ -1,29 +1,27 @@
 import React, {ChangeEvent} from 'react';
 import classes from './MyPost.module.css'
 import Post from "./Post/Post";
-import {PostDataTypes} from "../../../redux/state";
+import {ActionsType, PostDataTypes} from "../../../redux/state";
 
 
 
 type MyPostsPropsType = {
     postData: Array<PostDataTypes>
-    addPost: (text: string)=> void
     message: string
-    changeNewText: (text: string) => void
+    dispatch: (action: ActionsType)=> void
 }
 
-const MyPost = ({postData, addPost, message, changeNewText}: MyPostsPropsType) => {
+const MyPost = ({postData, dispatch, message, }: MyPostsPropsType) => {
     let postElement = postData.map(p =>  <
-        Post message={p.message} likeCount={p.likesCount}/>)
+        Post key={p.id} message={p.message} likeCount={p.likesCount}/>)
 
 
     const addPostHandler = () => {
-            addPost(message)
-
+            dispatch({type: "ADD-POST", postText: message})
     }
 
     const changeTextHandler = (event:ChangeEvent<HTMLTextAreaElement> ) => {
-        changeNewText(event.currentTarget.value)
+        dispatch({type:"CHANGE-NEW-POST-TEXT", newText : event.currentTarget.value})
     }
 
     return (

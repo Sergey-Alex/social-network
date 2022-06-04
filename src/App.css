@@ -4,7 +4,7 @@
     "h h"
      "n c"
     "n c";
-    max-width: 1200px;
+    max-width: 1000px;
     display: grid;
     margin: 0 auto;
     grid-template-rows: 60px 1fr;
@@ -16,13 +16,6 @@
 .app-wrapper-content {
     grid-area: c;
     background-color: indianred;
-}
-.friends {
-    background-color: orange;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: inline-flex;
 }
 
 

@@ -2,6 +2,7 @@
     padding: 10px;
 }
 
-.content img {
-    max-width: 1200px;
+.content.img {
+    max-width: 800px;
+    height: auto;
 }

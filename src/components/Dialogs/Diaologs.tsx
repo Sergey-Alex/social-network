@@ -13,8 +13,8 @@ type DiaologsTypeProps = {
 const Dialogs = ({message, dialogsData}:DiaologsTypeProps) => {
 
 
-    let dialogs = dialogsData.map(d => <DialogItem name = {d.name} id = {d.id}/>)
-    let messages = message.map(m =>  <Message textMessage={m.textMessage} id={m.id}/>)
+    let dialogs = dialogsData.map(d => <DialogItem key={d.id} name = {d.name} id = {d.id}/>)
+    let messages = message.map(m =>  <Message key={m.id} textMessage={m.textMessage} id={m.id}/>)
 
     const newMessageElement = React.createRef<HTMLTextAreaElement>()
 

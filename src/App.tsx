@@ -28,9 +28,8 @@ function App(props: AppProps) {
                                                   message={state.messagePage.message}/>}/>
                     <Route path='/profile' render={() => <Profile
                         message={state.profilePage.messageForNewPost}
-                        addPost={props.store.addPost.bind(props.store)}
+                        dispatch={props.store.dispatch.bind(props.store)}
                         postData={state.profilePage.postData}
-                        changeNewText={props.store.changeNewText.bind(props.store)}
                     />}
                     />
                     <Route path='/news' render={() => <News/>}/>

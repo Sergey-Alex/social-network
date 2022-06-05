@@ -1,27 +1,39 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import classes from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DiaologItem";
 import {Message} from "./Message/Message";
-import {DiaologPropsType, MessageTypeText} from "../../redux/state";
+import {
+    ActionsType,
+    // addMessageAC,
+    addMessageDialogAC,
+    ChangeMessageDialogsAC,
+    DiaologPropsType,
+    MessageTypeText
+} from "../../redux/state";
 
 type DiaologsTypeProps = {
+    dialogMessage: string,
     message: Array<MessageTypeText>
     dialogsData: Array<DiaologPropsType>
+    dispatch: (action: ActionsType) => void
 }
 
 
-const Dialogs = ({message, dialogsData}:DiaologsTypeProps) => {
+const Dialogs = ({message, dialogsData, dispatch, dialogMessage}:DiaologsTypeProps) => {
 
 
     let dialogs = dialogsData.map(d => <DialogItem key={d.id} name = {d.name} id = {d.id}/>)
     let messages = message.map(m =>  <Message key={m.id} textMessage={m.textMessage} id={m.id}/>)
 
-    const newMessageElement = React.createRef<HTMLTextAreaElement>()
+    console.log({dialogMessage})
 
     const addMessage = () => {
-        console.log(newMessageElement.current?.value)
+        dispatch(addMessageDialogAC(dialogMessage))
     }
 
+    const onChangeHandler = (event:ChangeEvent<HTMLTextAreaElement>) => {
+        dispatch(ChangeMessageDialogsAC(event.currentTarget.value))
+    }
 
     return (
         <div className={classes.dialogs}>
@@ -31,8 +43,8 @@ const Dialogs = ({message, dialogsData}:DiaologsTypeProps) => {
             <div className={classes.messages}>
                 {messages}
                 <div>
-                    <textarea ref={newMessageElement}></textarea>
-                    <button onClick={addMessage} >add</button>
+                    <textarea onChange={onChangeHandler} value={dialogMessage}></textarea>
+                    <button onClick={addMessage}>add</button>
                 </div>
             </div>
 

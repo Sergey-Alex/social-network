@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import classes from './MyPost.module.css'
 import Post from "./Post/Post";
-import {ActionsType, addPostAC, ChangeNewTextAC, PostDataTypes} from "../../../redux/state";
+import {ActionsType, AddPostAC, ChangeNewTextAC, PostDataTypes} from "../../../redux/state";
 
 
 
@@ -17,7 +17,7 @@ const MyPost = ({postData, dispatch, message, }: MyPostsPropsType) => {
 
 
     const addPostHandler = () => {
-            dispatch(addPostAC(message))
+            dispatch(AddPostAC(message))
     }
 
     const changeTextHandler = (event:ChangeEvent<HTMLTextAreaElement> ) => {

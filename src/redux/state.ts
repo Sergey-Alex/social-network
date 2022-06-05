@@ -1,5 +1,10 @@
 import {message} from "antd";
 
+const ADD_POST = 'ADD-POST'
+const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT'
+const ADD_MESSAGE = 'ADD-MESSAGE'
+const CHANGE_NEW_DIALOGS_MESSAGES = 'CHANGE_NEW_DIALOGS_MESSAGES'
+
 export type MessageTypeText = {
     id: number
     textMessage: string
@@ -28,7 +33,8 @@ export type StatePropsType = {
         postData: Array<PostDataTypes>
     },
     messagePage: {
-        message: Array<MessageTypeText>
+        message: Array<MessageTypeText>,
+        newDialogMessage: string
     },
     sidebar: {
         usersFriend: Array<string>
@@ -36,34 +42,36 @@ export type StatePropsType = {
 
 }
 
+
+export type ActionsType =
+    ReturnType<typeof AddPostAC>
+    | ReturnType<typeof ChangeNewTextAC>
+    | ReturnType<typeof addMessageDialogAC>
+    | ReturnType<typeof ChangeMessageDialogsAC>
+
 export type StoreType = {
     _state: StatePropsType
     _renderTree: () => void  // onChange y D
     subscribe: (observer: () => void) => void
     getState: () => StatePropsType
     dispatch: (action: ActionsType) => void
-}
-//
-// type AddPostActionType = {
-//     type: 'ADD-POST'
-//     postText: string
-// }
-//
-// type ChangeNewTextActionType = {
-//     type: 'CHANGE-NEW-POST-TEXT'
-//     newText: string
-//
-// }
 
-export const addPostAC = (postText: string)  => {
-        return {type: "ADD-POST", postText: postText} as const
 }
 
-export const ChangeNewTextAC = (newText: string)  => {
-    return {type: "CHANGE-NEW-POST-TEXT", newText: newText} as const
+export const AddPostAC = (postText: string) => {
+    return {type: ADD_POST, postText: postText} as const
 }
 
-export type ActionsType = ReturnType<typeof addPostAC> | ReturnType<typeof ChangeNewTextAC>
+export const ChangeNewTextAC = (newText: string) => {
+    return {type: CHANGE_NEW_POST_TEXT, newText: newText} as const
+}
+
+export const addMessageDialogAC = (message: string) => {
+    return {type: ADD_MESSAGE, postMessage: message} as const
+}
+export const ChangeMessageDialogsAC = (message: string) => {
+    return {type: CHANGE_NEW_DIALOGS_MESSAGES, newMessage: message} as const
+}
 
 const store = {
     _state: {
@@ -89,6 +97,7 @@ const store = {
                 {id: 2, textMessage: 'hi hey'},
                 {id: 3, textMessage: 'wasaaap'}
             ],
+            newDialogMessage: ''
         },
         sidebar: {
             usersFriend: ['Petya', 'Nika', 'Jhon']
@@ -103,8 +112,8 @@ const store = {
     getState() {
         return this._state
     },
-    dispatch(action: any) {
-        if (action.type === 'ADD-POST') {
+    dispatch(action: ActionsType) {
+        if (action.type === ADD_POST) {
             const newPost: PostDataTypes = {
                 id: new Date().getTime(),
                 message: action.postText,
@@ -112,59 +121,22 @@ const store = {
             }
             this._state.profilePage.postData.push(newPost)
             this._renderTree()
-        } else if (action.type === 'CHANGE-NEW-POST-TEXT') {
+        } else if (action.type === CHANGE_NEW_POST_TEXT) {
             this._state.profilePage.messageForNewPost = action.newText
+            this._renderTree()
+        } else if (action.type === ADD_MESSAGE) {
+            const newMessage: MessageTypeText = {
+                id: new Date().getTime(),
+                textMessage: action.postMessage
+            }
+            this._state.messagePage.message.push(newMessage)
+            this._renderTree()
+        } else if (action.type === CHANGE_NEW_DIALOGS_MESSAGES){
+            this._state.messagePage.newDialogMessage = action.newMessage
             this._renderTree()
         }
     }
-
 }
-
-
-// let state: StatePropsType = {
-//     profilePage: {
-//         messageForNewPost: '',
-//         postData: [
-//             {id: 1, message: 'Hi it work111 ', likesCount: 12},
-//             {id: 2, message: 'Hi it work222', likesCount: 100},
-//             {id: 3, message: 'Hi it work333', likesCount: 200},
-//
-//         ],
-//         dialogsData: [
-//             {id: 1, name: 'Dymych'},
-//             {id: 2, name: 'Andrat'},
-//             {id: 3, name: 'Sergey'},
-//             {id: 4, name: 'Anna'},
-//             {id: 5, name: 'Alina'}
-//         ],
-//     },
-//     messagePage: {
-//         message: [
-//             {id: 1, textMessage: 'Hello'},
-//             {id: 2, textMessage: 'hi hey'},
-//             {id: 3, textMessage: 'wasaaap'}
-//         ],
-//     },
-//     sidebar: {
-//         usersFriend: ['Petya', 'Nika', 'Jhon']
-//     }
-// }
-//
-// export const addPost = (postText: string) => {
-//     const newPost: PostDataTypes = {
-//         id: new Date().getTime(),
-//         message: postText,
-//         likesCount: 0
-//     }
-//     state.profilePage.postData.push(newPost)
-//
-//     state.profilePage.messageForNewPost = ''
-// }
-//
-// export const changeNewText = (newText: string) => {
-//     state.profilePage.messageForNewPost = newText
-//     renderTree()
-// }
 
 
 export default store

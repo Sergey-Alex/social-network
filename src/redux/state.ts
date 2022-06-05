@@ -1,3 +1,5 @@
+import {message} from "antd";
+
 export type MessageTypeText = {
     id: number
     textMessage: string
@@ -41,19 +43,27 @@ export type StoreType = {
     getState: () => StatePropsType
     dispatch: (action: ActionsType) => void
 }
+//
+// type AddPostActionType = {
+//     type: 'ADD-POST'
+//     postText: string
+// }
+//
+// type ChangeNewTextActionType = {
+//     type: 'CHANGE-NEW-POST-TEXT'
+//     newText: string
+//
+// }
 
-type AddPostActionType = {
-    type: 'ADD-POST'
-    postText: string
+export const addPostAC = (postText: string)  => {
+        return {type: "ADD-POST", postText: postText} as const
 }
 
-type ChangeNewTextActionType = {
-    type: 'CHANGE-NEW-POST-TEXT'
-    newText: string
-
+export const ChangeNewTextAC = (newText: string)  => {
+    return {type: "CHANGE-NEW-POST-TEXT", newText: newText} as const
 }
 
-export type ActionsType = AddPostActionType | ChangeNewTextActionType
+export type ActionsType = ReturnType<typeof addPostAC> | ReturnType<typeof ChangeNewTextAC>
 
 const store = {
     _state: {

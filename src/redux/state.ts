@@ -1,9 +1,6 @@
-import {message} from "antd";
-
-const ADD_POST = 'ADD-POST'
-const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT'
-const ADD_MESSAGE = 'ADD-MESSAGE'
-const CHANGE_NEW_DIALOGS_MESSAGES = 'CHANGE_NEW_DIALOGS_MESSAGES'
+import profileReducer, {AddPostAC, ChangeNewTextAC} from "./profile-reducer";
+import dialogsReducer, {addMessageDialogAC, ChangeMessageDialogsAC} from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
 
 export type MessageTypeText = {
     id: number
@@ -58,21 +55,6 @@ export type StoreType = {
 
 }
 
-export const AddPostAC = (postText: string) => {
-    return {type: ADD_POST, postText: postText} as const
-}
-
-export const ChangeNewTextAC = (newText: string) => {
-    return {type: CHANGE_NEW_POST_TEXT, newText: newText} as const
-}
-
-export const addMessageDialogAC = (message: string) => {
-    return {type: ADD_MESSAGE, postMessage: message} as const
-}
-export const ChangeMessageDialogsAC = (message: string) => {
-    return {type: CHANGE_NEW_DIALOGS_MESSAGES, newMessage: message} as const
-}
-
 const store = {
     _state: {
         profilePage: {
@@ -113,28 +95,35 @@ const store = {
         return this._state
     },
     dispatch(action: ActionsType) {
-        if (action.type === ADD_POST) {
-            const newPost: PostDataTypes = {
-                id: new Date().getTime(),
-                message: action.postText,
-                likesCount: 0
-            }
-            this._state.profilePage.postData.push(newPost)
-            this._renderTree()
-        } else if (action.type === CHANGE_NEW_POST_TEXT) {
-            this._state.profilePage.messageForNewPost = action.newText
-            this._renderTree()
-        } else if (action.type === ADD_MESSAGE) {
-            const newMessage: MessageTypeText = {
-                id: new Date().getTime(),
-                textMessage: action.postMessage
-            }
-            this._state.messagePage.message.push(newMessage)
-            this._renderTree()
-        } else if (action.type === CHANGE_NEW_DIALOGS_MESSAGES){
-            this._state.messagePage.newDialogMessage = action.newMessage
-            this._renderTree()
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.messagePage = dialogsReducer(this._state.messagePage, action)
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+
+        this._renderTree()
+        // if (action.type === ADD_POST) {
+        //     const newPost: PostDataTypes = {
+        //         id: new Date().getTime(),
+        //         message: action.postText,
+        //         likesCount: 0
+        //     }
+        //     this._state.profilePage.postData.push(newPost)
+        //     this._state.profilePage.messageForNewPost =''
+        //     this._renderTree()
+        // } else if (action.type === CHANGE_NEW_POST_TEXT) {
+        //     this._state.profilePage.messageForNewPost = action.newText
+        //     this._renderTree()
+        // } else if (action.type === ADD_MESSAGE) {
+        //     const newMessage: MessageTypeText = {
+        //         id: new Date().getTime(),
+        //         textMessage: action.postMessage
+        //     }
+        //     this._state.messagePage.newDialogMessage = ''
+        //     this._state.messagePage.message.push(newMessage)
+        //     this._renderTree()
+        // } else if (action.type === CHANGE_NEW_DIALOGS_MESSAGES){
+        //     this._state.messagePage.newDialogMessage = action.newMessage
+        //     this._renderTree()
+        // }
     }
 }
 

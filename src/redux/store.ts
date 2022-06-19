@@ -18,7 +18,7 @@ export type PostDataTypes = {
     likesCount: number
 }
 
-export type usersFriendType = {
+export type SidebarType = {
     usersFriend: Array<string>
 
 }
@@ -82,7 +82,7 @@ const store = {
             newDialogMessage: ''
         },
         sidebar: {
-            usersFriend: ['Petya', 'Nika', 'Jhon']
+            usersFriend: ['Petya', 'Nika', 'John']
         }
     },
     _renderTree() {
@@ -95,35 +95,12 @@ const store = {
         return this._state
     },
     dispatch(action: ActionsType) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.messagePage = dialogsReducer(this._state.messagePage, action)
-        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
+        // this._state.profilePage = profileReducer(this._state.profilePage, action)
+        // this._state.messagePage = dialogsReducer(this._state.messagePage, action)
+        // this._state.sidebar = sidebarReducer(this._state.sidebar, action)
 
         this._renderTree()
-        // if (action.type === ADD_POST) {
-        //     const newPost: PostDataTypes = {
-        //         id: new Date().getTime(),
-        //         message: action.postText,
-        //         likesCount: 0
-        //     }
-        //     this._state.profilePage.postData.push(newPost)
-        //     this._state.profilePage.messageForNewPost =''
-        //     this._renderTree()
-        // } else if (action.type === CHANGE_NEW_POST_TEXT) {
-        //     this._state.profilePage.messageForNewPost = action.newText
-        //     this._renderTree()
-        // } else if (action.type === ADD_MESSAGE) {
-        //     const newMessage: MessageTypeText = {
-        //         id: new Date().getTime(),
-        //         textMessage: action.postMessage
-        //     }
-        //     this._state.messagePage.newDialogMessage = ''
-        //     this._state.messagePage.message.push(newMessage)
-        //     this._renderTree()
-        // } else if (action.type === CHANGE_NEW_DIALOGS_MESSAGES){
-        //     this._state.messagePage.newDialogMessage = action.newMessage
-        //     this._renderTree()
-        // }
+
     }
 }
 

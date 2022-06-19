@@ -1,5 +1,5 @@
 
-import store from "./redux/state";
+import store from './redux/redux-store';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -19,4 +19,6 @@ export let renderTree = () => {
 }
 renderTree()
 
-store.subscribe(renderTree) // наблюдатель
+store.subscribe(() => {
+    renderTree()
+}) // наблюдатель

@@ -1,7 +1,16 @@
-import {ActionsType, StatePropsType} from "./state";
+import {ActionsType, StatePropsType} from "./store";
+
+type InitialStateProps = {
+    usersFriend: Array<string>
+}
 
 
-const sidebarReducer = (state: any, action: any) => {
+let initialState: InitialStateProps = {
+    usersFriend: ['Petya', 'Nika', 'John']
+}
+
+
+const sidebarReducer = (state = initialState, action: any) => {
 
     return state
 }

@@ -1,4 +1,5 @@
-import {ActionsType, MessageTypeText, PostDataTypes, StatePropsType} from "./state";
+import {ActionsType, MessageTypeText, PostDataTypes, StatePropsType} from "./store";
+import {message} from "antd";
 
 
 // type DialogsReducerType = {
@@ -15,12 +16,20 @@ export const ChangeMessageDialogsAC = (message: string) => {
     return {type: CHANGE_NEW_DIALOGS_MESSAGES, newMessage: message} as const
 }
 type InitialStateType = {
-        message: Array<MessageTypeText>,
-        newDialogMessage: string
+    message: Array<MessageTypeText>,
+    newDialogMessage: string
+}
+let initialState: InitialStateType  = {
+        message: [
+            {id: 1, textMessage: 'Hello'},
+            {id: 2, textMessage: 'hi hey'},
+            {id: 3, textMessage: 'wasaaap'}
+        ],
+        newDialogMessage: ''
+
 }
 
-
-const dialogsReducer = (state: InitialStateType, action: ActionsType): InitialStateType => {
+const dialogsReducer = (state = initialState, action: ActionsType): InitialStateType => {
 
     switch (action.type) {
         case ADD_MESSAGE:
@@ -28,12 +37,11 @@ const dialogsReducer = (state: InitialStateType, action: ActionsType): InitialSt
                 id: new Date().getTime(),
                 textMessage: action.postMessage
             }
-            state.newDialogMessage = ''
-            state.message.push(newMessage)
-            return  state
+            const newMessageData = [...state.message]
+            newMessageData.push(newMessage)
+            return {...state, newDialogMessage: '', message: newMessageData}
         case CHANGE_NEW_DIALOGS_MESSAGES:
-            state.newDialogMessage = action.newMessage
-          return state
+            return {...state, newDialogMessage: action.newMessage}
         default:
             return state
     }

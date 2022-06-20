@@ -12,12 +12,12 @@ type ProfilePostData = {
     store: StoreType
 }
 
-const Profile = ({postData, dispatch, message, store}: ProfilePostData) => {
+const Profile = () => {
 
     return (
         <div>
             <ProfileInfo/>
-            <MyPostContainer store = {store}  dispatch={dispatch}  postData={postData} message={message}/>
+            <MyPostContainer/>
         </div>
 
     );

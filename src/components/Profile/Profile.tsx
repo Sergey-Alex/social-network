@@ -1,16 +1,16 @@
 import React from 'react';
-import MyPost from "./MyPosts/MyPost";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsType, PostDataTypes, StatePropsType} from "../../redux/store";
-import MyPostContainer from "./MyPosts/MyPostContainer";
-import {StoreType} from "../../redux/redux-store";
+import {ActionsType, PostDataTypes} from "../../redux/store";
 
-type ProfilePostData = {
-    postData: Array<PostDataTypes>
-    message: string
-    dispatch: (action: ActionsType) => void
-    store: StoreType
-}
+import {StoreType} from "../../redux/redux-store";
+import {MyPostContainer} from "./MyPosts/MyPostContainer";
+
+// type ProfilePostData = {
+//     postData: Array<PostDataTypes>
+//     message: string
+//     dispatch: (action: ActionsType) => void
+//     store: StoreType
+// }
 
 const Profile = () => {
 

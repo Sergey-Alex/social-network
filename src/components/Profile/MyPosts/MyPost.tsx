@@ -7,15 +7,16 @@ import {ActionsType, PostDataTypes} from "../../../redux/store";
 
 
 export type MyPostsPropsType = {
-    postData: Array<PostDataTypes>
     message: string
-    addPostHandlerContainer: (text: string) => void
-    changeTextHandlerContainer: (text:string) => void
+    messageForNewPost: string
+    postData: Array<PostDataTypes>
+    addPostHandlerContainer: () => void
+    changeTextHandlerContainer: (text: string) => void
 }
 
 const MyPost = ({
                     postData,
-                    message,
+                    messageForNewPost,
                     addPostHandlerContainer,
                     changeTextHandlerContainer
                 }: MyPostsPropsType) => {
@@ -24,7 +25,7 @@ const MyPost = ({
 
 
     const addPostHandler = () => {
-        addPostHandlerContainer(message)
+        addPostHandlerContainer()
     }
 
     const changeTextHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -36,7 +37,7 @@ const MyPost = ({
             <h3>MyPosts</h3>
             <div>
                 <div>
-                    <textarea onChange={changeTextHandler} value={message}></textarea>
+                    <textarea onChange={changeTextHandler} value={messageForNewPost}></textarea>
                 </div>
                 <div>
                     <button onClick={addPostHandler}>Add Post</button>

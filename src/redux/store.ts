@@ -65,19 +65,20 @@ const store = {
                 {id: 3, message: 'Hi it work333', likesCount: 200},
 
             ],
-            dialogsData: [
-                {id: 1, name: 'Dymych'},
-                {id: 2, name: 'Andrat'},
-                {id: 3, name: 'Sergey'},
-                {id: 4, name: 'Anna'},
-                {id: 5, name: 'Alina'}
-            ],
+
         },
         messagePage: {
             message: [
                 {id: 1, textMessage: 'Hello'},
                 {id: 2, textMessage: 'hi hey'},
                 {id: 3, textMessage: 'wasaaap'}
+            ],
+            dialogsData: [
+                {id: 1, name: 'Dymych'},
+                {id: 2, name: 'Andrat'},
+                {id: 3, name: 'Sergey'},
+                {id: 4, name: 'Anna'},
+                {id: 5, name: 'Alina'}
             ],
             newDialogMessage: ''
         },

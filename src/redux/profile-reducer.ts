@@ -4,8 +4,8 @@ import {ActionsType, DiaologPropsType, PostDataTypes} from "./store";
 const ADD_POST = 'ADD-POST'
 const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT'
 
-export const AddPostAC = (postText: string) => {
-    return {type: ADD_POST, postText: postText} as const
+export const AddPostAC = () => {
+    return {type: ADD_POST} as const
 }
 
 export const ChangeNewTextAC = (newText: string) => {
@@ -15,7 +15,6 @@ export const ChangeNewTextAC = (newText: string) => {
 type InitialStateType = {
     messageForNewPost: string
     postData: Array<PostDataTypes>
-    dialogsData: Array<DiaologPropsType>
 }
 let initialState : InitialStateType = {
     messageForNewPost: '',
@@ -25,14 +24,6 @@ let initialState : InitialStateType = {
         {id: 3, message: 'Hi it work333', likesCount: 200},
 
     ],
-    dialogsData: [
-        {id: 1, name: 'Dymych'},
-        {id: 2, name: 'Andrey'},
-        {id: 3, name: 'Sergey'},
-        {id: 4, name: 'Anna'},
-        {id: 5, name: 'Alina'}
-    ],
-
 }
 
 const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -40,7 +31,7 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
         case ADD_POST:
             const newPost: PostDataTypes = {
                 id: new Date().getTime(),
-                message: action.postText,
+                message: state.messageForNewPost,
                 likesCount: 0
             }
             const newPostData = [...state.postData]

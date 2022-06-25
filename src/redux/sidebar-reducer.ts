@@ -1,4 +1,4 @@
-import {ActionsType, StatePropsType} from "./store";
+
 
 type InitialStateProps = {
     usersFriend: Array<string>

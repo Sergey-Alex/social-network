@@ -1,0 +1,7 @@
+.userPhoto {
+    height:100px;
+}
+.user {
+    display: inline-grid;
+    padding: 40px;
+}

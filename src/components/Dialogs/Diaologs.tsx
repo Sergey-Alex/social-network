@@ -2,14 +2,20 @@ import React, {ChangeEvent} from 'react';
 import classes from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DiaologItem";
 import {Message} from "./Message/Message";
-import {ActionsType, DiaologPropsType, MessageTypeText, PostDataTypes} from "../../redux/store";
-import {addMessageDialogAC, ChangeMessageDialogsAC} from "../../redux/dialogs-reducer";
 
+export type MessageTypeText = {
+    id: number
+    textMessage: string
+}
+export type DialogPropsType = {
+    name: string
+    id: number
+}
 
 type DialogsTypeProps = {
     dialogMessage: string,
     message: Array<MessageTypeText>
-    dialogsData: Array<DiaologPropsType>
+    dialogsData: Array<DialogPropsType>
     onSendMessageClick: () => void
     updateNewMessageBody: (text: string) =>void
 }

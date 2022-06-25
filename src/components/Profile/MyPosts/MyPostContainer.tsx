@@ -1,8 +1,8 @@
 import React from 'react';
-import {PostDataTypes} from "../../../redux/store";
-import {AddPostAC, ChangeNewTextAC} from "../../../redux/profile-reducer";
 
-import {AppStateType, StoreType} from "../../../redux/redux-store";
+import {AddPostAC, ChangeNewTextAC, PostDataTypes} from "../../../redux/profile-reducer";
+
+import {AppStateType} from "../../../redux/redux-store";
 
 import {Dispatch} from "redux";
 import {connect} from "react-redux";

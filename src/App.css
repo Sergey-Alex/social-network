@@ -9,6 +9,7 @@
     margin: 0 auto;
     grid-template-rows: 60px 1fr;
     grid-template-columns: 2fr 10fr;
+    gap: 3px;
 
     /*grid-gap:10px ;*/
 }

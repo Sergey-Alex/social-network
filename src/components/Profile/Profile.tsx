@@ -1,8 +1,5 @@
 import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsType, PostDataTypes} from "../../redux/store";
-
-import {StoreType} from "../../redux/redux-store";
 import {MyPostContainer} from "./MyPosts/MyPostContainer";
 
 // type ProfilePostData = {

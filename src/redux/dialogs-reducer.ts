@@ -1,4 +1,15 @@
-import {ActionsType, MessageTypeText} from "./store";
+
+import {AddPostAC, ChangeNewTextAC} from "./profile-reducer";
+export type MessageTypeText = {
+    id: number
+    textMessage: string
+}
+
+export type ActionsType =
+    ReturnType<typeof AddPostAC>
+    | ReturnType<typeof ChangeNewTextAC>
+    | ReturnType<typeof addMessageDialogAC>
+    | ReturnType<typeof ChangeMessageDialogsAC>
 
 
 const ADD_MESSAGE = 'ADD-MESSAGE'
@@ -39,7 +50,7 @@ let initialState: InitialStateType  = {
 
 }
 
-const dialogsReducer = (state = initialState, action: ActionsType): InitialStateType => {
+const dialogsReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
 
     switch (action.type) {
         case ADD_MESSAGE:
@@ -47,9 +58,7 @@ const dialogsReducer = (state = initialState, action: ActionsType): InitialState
                 id: new Date().getTime(),
                 textMessage: state.newDialogMessage
             }
-            const newMessageData = [...state.message]
-            newMessageData.push(newMessage)
-            return {...state, newDialogMessage: '', message: newMessageData}
+            return {...state, newDialogMessage: '', message: [...state.message, newMessage]}
         case CHANGE_NEW_DIALOGS_MESSAGES:
             return {...state, newDialogMessage: action.newMessage}
         default:

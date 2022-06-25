@@ -1,45 +1,22 @@
 import React from 'react';
 import {UsersPropsType} from "./UsersContainer";
 import classes from './Users.module.css'
+import axios from "axios";
+import userPhoto from '../../assets/images/img.png'
 
 const Users = (props: UsersPropsType) => {
 
     if (props.users.length === 0) {
-        props.setUsers([
-                {
-                    id: 1,
-                    photoUrl: 'https://png.pngtree.com/element_our/png_detail/20181206/users-vector-icon-png_260862.jpg',
-                    followed: false,
-                    fullName: 'Sergio',
-                    status: 'i am boss',
-                    location: {city: 'Minsk', country: 'Belarus'}
-                },
-                {
-                    id: 2,
-                    photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiXiaFDvuEOMuoyhYqbYu3YbBVAQfcIp7QosQDBy9fWyKqlaMpEjCSLRfnoUDc1X5X_PQ&usqp=CAU',
-                    followed: false,
-                    fullName: 'Semen',
-                    status: 'i am not boss',
-                    location: {city: 'Moscow', country: 'Russia'}
-                },
-                {
-                    id: 3,
-                    photoUrl: 'https://images.freeimages.com/images/premium/previews/2092/20923708-lady-user-icon.jpg',
-                    followed: false,
-                    fullName: 'Maria',
-                    status: 'i am not boss',
-                    location: {city: 'Kiev', country: 'Ukraine'}
-                }
-        ])
-
-
+        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+            .then(res => props.setUsers(res.data.items))
     }
+
     return (
         <div>
             {
                 props.users.map(user => <div className={classes.user} key={user.id}>
                     <span>
-                        <div><img className={classes.userPhoto} src={user.photoUrl} alt=""/>
+                        <div><img className={classes.userPhoto} src={user.photos.small !== null ? user.photos.small : userPhoto} alt=""/>
                         </div>
                         <div>
                             {
@@ -56,12 +33,12 @@ const Users = (props: UsersPropsType) => {
                     </span>
                     <span>
                         <span>
-                            <div>{user.fullName}</div>
+                            <div>{user.name}</div>
                             <div>{user.status}</div>
                         </span>
                         <span>
-                            <div>{user.location.country}</div>
-                            <div>{user.location.city}</div>
+                            <div>{'user.location.country'}</div>
+                            <div>{'user.location.city'}</div>
                         </span>
                     </span>
                 </div>)

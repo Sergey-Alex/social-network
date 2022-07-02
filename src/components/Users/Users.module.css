@@ -2,6 +2,11 @@
     height:100px;
 }
 .user {
-    display: inline-grid;
+    display: flex;
     padding: 40px;
+    flex-direction: column;
+}
+.selectedPage {
+    font-weight: bold;
+    cursor:pointer;
 }

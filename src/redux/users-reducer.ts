@@ -1,9 +1,8 @@
-
-
-
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SETUSERS = 'SETUSERS'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 
 
 export const followAC = (userId: number) => {
@@ -16,16 +15,23 @@ export const unFollowAC = (userId: number) => {
 export const setUsersAC = (users: Array<UsersType>) => {
     return {type: SETUSERS, users} as const
 }
+export const setCurrentPageAC = (currentPage: number) => {
+    return {type: SET_CURRENT_PAGE, currentPage} as const
+}
+export const setTotalUserCountAC = (totalUsers: number) => {
+    return {type: SET_TOTAL_USERS_COUNT, totalUsers} as const
+}
 
 type UsersActionType = ReturnType<typeof followAC>
     | ReturnType<typeof unFollowAC>
     | ReturnType<typeof setUsersAC>
-
+    | ReturnType<typeof setCurrentPageAC>
+    | ReturnType<typeof setTotalUserCountAC>
 
 
 export type UsersType = {
     id: number
-    photos: {small:any, large: any}
+    photos: { small: any, large: any }
     followed: boolean
     name: string
     status: string
@@ -34,40 +40,23 @@ export type UsersType = {
 
 export type InitialStateType = {
     users: Array<UsersType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 let initialState: InitialStateType = {
-    users: [
-        // {
-        //     id: 1,
-        //     photoUrl: 'https://png.pngtree.com/element_our/png_detail/20181206/users-vector-icon-png_260862.jpg',
-        //     followed: false,
-        //     fullName: 'Sergio',
-        //     status: 'i am boss',
-        //     location: {city: 'Minsk', country: 'Belarus'}},
-        // {
-        //     id: 2,
-        //     photoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiXiaFDvuEOMuoyhYqbYu3YbBVAQfcIp7QosQDBy9fWyKqlaMpEjCSLRfnoUDc1X5X_PQ&usqp=CAU',
-        //     followed: false,
-        //     fullName: 'Semen',
-        //     status: 'i am not boss',
-        //     location: {city: 'Moscow', country: 'Russia'}
-        // },
-        // {
-        //     id: 3,
-        //     photoUrl: 'https://images.freeimages.com/images/premium/previews/2092/20923708-lady-user-icon.jpg',
-        //     followed: false,
-        //     fullName: 'Maria',
-        //     status: 'i am not boss',
-        //     location: {city: 'Kiev', country: 'Ukraine'}
-        // },
-    ],
+    users: [],
+    pageSize: 100,
+    totalUsersCount: 0,
+    currentPage: 10
 }
 
 const usersReducers = (state: InitialStateType = initialState, action: UsersActionType): InitialStateType => {
     switch (action.type) {
         case FOLLOW:
 
-            return {...state, users: state.users.map(user => {
+            return {
+                ...state, users: state.users.map(user => {
                     if (user.id === action.userId) {
                         return {...user, followed: true}
                     }
@@ -85,7 +74,11 @@ const usersReducers = (state: InitialStateType = initialState, action: UsersActi
                 })
             }
         case SETUSERS:
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+        case SET_CURRENT_PAGE:
+            return {...state, currentPage: action.currentPage}
+        case SET_TOTAL_USERS_COUNT:
+            return {...state, totalUsersCount: action.totalUsers}
         default:
             return state
     }

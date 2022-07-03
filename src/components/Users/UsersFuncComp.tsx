@@ -1,42 +1,23 @@
 import React from 'react';
-import classes from "./Users.module.css";
-import userPhoto from "../../assets/images/img.png";
-import {UsersType} from "../../redux/users-reducer";
+import {UsersPropsType} from "./UsersContainer";
+import classes from './Users.module.css'
+import axios from "axios";
+import userPhoto from '../../assets/images/img.png'
 
-
-
-type UserTypeComponent = {
-    onPageChanged: (pageNumber: number) => void
-    users: Array<UsersType>
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    Follow: (userId: number) => void
-    unFollow: (userId: number) => void
-}
-
-
-
-
-const Users = (props: UserTypeComponent) => {
-    let pagesCount: number = Math.ceil(props.totalUsersCount / props.pageSize)
-    let pages = []
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    }
+const UsersFuncComp = (props: UsersPropsType) => {
+        const getUsers = () => {
+            if (props.users.length === 0) {
+                axios.get('https://social-network.samuraijs.com/api/1.0/users')
+                    .then(res => props.setUsers(res.data.items))
+            }
+        }
 
     return (
         <div>
-            <div>
-                {pages.map(p => <span
-                    onClick={(e) => props.onPageChanged(p)}
-                    className={(p === props.currentPage) ? classes.selectedPage : ''}>{p}</span>)}
-            </div>
             {
-                props.users.map((user: any) => <div className={classes.user} key={user.id}>
+                props.users.map(user => <div className={classes.user} key={user.id}>
                     <span>
-                        <div><img className={classes.userPhoto}
-                                  src={user.photos.small !== null ? user.photos.small : userPhoto} alt=""/>
+                        <div><img className={classes.userPhoto} src={user.photos.small !== null ? user.photos.small : userPhoto} alt=""/>
                         </div>
                         <div>
                             {
@@ -67,4 +48,4 @@ const Users = (props: UserTypeComponent) => {
     );
 };
 
-export default Users;
+export default UsersFuncComp;

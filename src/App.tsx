@@ -3,7 +3,6 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Diaologs";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -13,17 +12,8 @@ import UsersContainer from "./components/Users/UsersContainer";
 
 
 
-
-
-
-
-
-export type AppProps = {
-    store: AppProps
-}
-
 function App() {
-    //const state = props.store.getState()
+
 
     return (
             <div className='app-wrapper'>

@@ -3,30 +3,37 @@ const UNFOLLOW = 'UNFOLLOW'
 const SETUSERS = 'SETUSERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 
-export const followAC = (userId: number) => {
+export const Follow = (userId: number) => {
     return {type: FOLLOW, userId} as const
 }
 
-export const unFollowAC = (userId: number) => {
+export const setToggleIsFetching = (isFetching: boolean) =>{
+    return {type: TOGGLE_IS_FETCHING, isFetching} as const
+}
+
+export const unFollow = (userId: number) => {
     return {type: UNFOLLOW, userId} as const
 }
-export const setUsersAC = (users: Array<UsersType>) => {
+export const setUsers = (users: Array<UsersType>) => {
     return {type: SETUSERS, users} as const
 }
-export const setCurrentPageAC = (currentPage: number) => {
+export const setCurrentPage = (currentPage: number) => {
     return {type: SET_CURRENT_PAGE, currentPage} as const
 }
-export const setTotalUserCountAC = (totalUsers: number) => {
+export const setTotalUserCount = (totalUsers: number) => {
     return {type: SET_TOTAL_USERS_COUNT, totalUsers} as const
 }
 
-type UsersActionType = ReturnType<typeof followAC>
-    | ReturnType<typeof unFollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setTotalUserCountAC>
+type UsersActionType =
+    ReturnType<typeof Follow>
+    | ReturnType<typeof unFollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setTotalUserCount>
+    | ReturnType<typeof setToggleIsFetching>
 
 
 export type UsersType = {
@@ -43,12 +50,14 @@ export type InitialStateType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 let initialState: InitialStateType = {
     users: [],
     pageSize: 100,
     totalUsersCount: 0,
-    currentPage: 10
+    currentPage: 10,
+    isFetching: false
 }
 
 const usersReducers = (state: InitialStateType = initialState, action: UsersActionType): InitialStateType => {
@@ -79,6 +88,8 @@ const usersReducers = (state: InitialStateType = initialState, action: UsersActi
             return {...state, currentPage: action.currentPage}
         case SET_TOTAL_USERS_COUNT:
             return {...state, totalUsersCount: action.totalUsers}
+        case TOGGLE_IS_FETCHING:
+            return {...state, isFetching: action.isFetching}
         default:
             return state
     }

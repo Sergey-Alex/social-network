@@ -13,6 +13,8 @@ const reducer = combineReducers({
 })
 const store = createStore(reducer);
 
+// @ts-ignore
+window.store = store
 //export type StoreType = typeof store
 
 export type AppStateType = ReturnType<typeof reducer>

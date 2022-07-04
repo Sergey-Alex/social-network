@@ -2,6 +2,7 @@ import React from 'react';
 import classes from "./Users.module.css";
 import userPhoto from "../../assets/images/img.png";
 import {UsersType} from "../../redux/users-reducer";
+import {NavLink} from "react-router-dom";
 
 
 
@@ -33,10 +34,14 @@ const Users = (props: UserTypeComponent) => {
                     className={(p === props.currentPage) ? classes.selectedPage : ''}>{p}</span>)}
             </div>
             {
-                props.users.map((user: any) => <div className={classes.user} key={user.id}>
+                props.users.map((user) => <div className={classes.user} key={user.id}>
                     <span>
-                        <div><img className={classes.userPhoto}
-                                  src={user.photos.small !== null ? user.photos.small : userPhoto} alt=""/>
+                        <div>
+                            <NavLink to={'/profile/' + user.id}>
+                                 <img className={classes.userPhoto}
+                                      src={user.photos.small !== null ? user.photos.small : userPhoto} alt=""/>
+                            </NavLink>
+
                         </div>
                         <div>
                             {

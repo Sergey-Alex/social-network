@@ -1,19 +1,17 @@
 import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {MyPostContainer} from "./MyPosts/MyPostContainer";
+import {ProfileContainerType} from "./ProfileContainer";
 
-// type ProfilePostData = {
-//     postData: Array<PostDataTypes>
-//     message: string
-//     dispatch: (action: ActionsType) => void
-//     store: StoreType
-// }
+type ProfilePropsType = {
+    profile: ProfileContainerType
+}
 
-const Profile = () => {
+const Profile = (props:ProfilePropsType) => {
 
     return (
         <div>
-            <ProfileInfo/>
+            <ProfileInfo profile = {props.profile}/>
             <MyPostContainer/>
         </div>
 

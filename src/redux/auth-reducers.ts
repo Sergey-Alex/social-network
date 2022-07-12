@@ -1,3 +1,4 @@
+
 export type ActionsType = ReturnType<typeof setAuthUserData>
 
 
@@ -43,5 +44,18 @@ const authReducer = (state: InitialStateType = initialState, action: ActionsType
     }
 
 }
+// const authMe = async () => {
+//     try {
+//         const response = await AuthApi.authMe()
+//         if (response.resultCode === 0){
+//             //...что то делаем
+//         } else {
+//             // делаем что то еще
+//         }
+//     }catch(err) {
+//         throw new Error(err.data.message[0])
+//     }
+// }
+
 
 export default authReducer

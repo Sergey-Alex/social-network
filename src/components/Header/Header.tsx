@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './Header.module.css'
 import {NavLink} from "react-router-dom";
+import {authTC} from "../../redux/auth-reducers";
 
 type DataType = {
     id: number | null
@@ -13,6 +14,7 @@ type DataType = {
 type HeaderPropsType = {
     data: DataType,
     isAuth: boolean
+
 }
 
 

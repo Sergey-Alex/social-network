@@ -1,5 +1,8 @@
+import {Dispatch} from "redux";
+import {AuthDataType} from "../components/Header/HeaderContainer";
+import {AuthApi} from "../api/api";
 
-export type ActionsType = ReturnType<typeof setAuthUserData>
+export type ActionsTypeAuth = ReturnType<typeof setAuthUserData>
 
 
 const SET_USER_DATA = 'SET_USER_DATA'
@@ -31,7 +34,7 @@ let initialState: InitialStateType = {
 
 }
 
-const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+const authReducer = (state: InitialStateType = initialState, action: ActionsTypeAuth): InitialStateType => {
 
     switch (action.type) {
         case SET_USER_DATA :
@@ -56,6 +59,15 @@ const authReducer = (state: InitialStateType = initialState, action: ActionsType
 //         throw new Error(err.data.message[0])
 //     }
 // }
+
+export const authTC = () => {
+    return(dispatch: Dispatch<ActionsTypeAuth>) => {
+        AuthApi.authMe().then((res) => {
+            let {id, email, login} = res.data
+           dispatch(setAuthUserData(id, email, login))
+        })
+    }
+}
 
 
 export default authReducer

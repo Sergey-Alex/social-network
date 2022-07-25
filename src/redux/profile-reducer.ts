@@ -1,6 +1,8 @@
 
 import {addMessageDialogAC, ChangeMessageDialogsAC} from "./dialogs-reducer";
 import {ProfileContainerType} from "../components/Profile/ProfileContainer";
+import {Dispatch} from "redux";
+import {profileApi} from "../api/api";
 
 
 export type PostDataTypes = {
@@ -8,7 +10,7 @@ export type PostDataTypes = {
     message: string
     likesCount: number
 }
-export type ActionsType =
+export type ActionsProfileType =
     ReturnType<typeof AddPostAC>
     | ReturnType<typeof ChangeNewTextAC>
     | ReturnType<typeof addMessageDialogAC>
@@ -30,7 +32,7 @@ export const ChangeNewTextAC = (newText: string) => {
     return {type: CHANGE_NEW_POST_TEXT, newText: newText} as const
 }
 
-type InitialStateType = {
+export type InitialStateType = {
     messageForNewPost: string
     postData: Array<PostDataTypes>
     profile:  ProfileContainerType | null
@@ -46,7 +48,7 @@ let initialState : InitialStateType = {
     profile: null
 }
 
-const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+const profileReducer = (state: InitialStateType = initialState, action: ActionsProfileType): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             const newPost: PostDataTypes = {
@@ -61,6 +63,14 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsT
             return {...state, profile: action.profile}
         default:
             return state
+    }
+}
+
+export const getProfileTC = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        profileApi.getProfile(userId).then((res) => {
+            dispatch(setUserProfile(res))
+        })
     }
 }
 

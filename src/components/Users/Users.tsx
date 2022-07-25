@@ -1,9 +1,9 @@
 import React from 'react';
 import classes from "./Users.module.css";
 import userPhoto from "../../assets/images/img.png";
-import {followTC, UsersType} from "../../redux/users-reducer";
+import { UsersType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import {FollowedApi} from "../../api/api";
+
 
 
 type UserTypeComponent = {
@@ -31,7 +31,7 @@ const Users = (props: UserTypeComponent) => {
     return (
         <div>
             <div>
-                {pages.map(p => <span
+                {pages.map((p, index) => <span key={p +index}
                     onClick={() => props.onPageChanged(p)}
                     className={(p === props.currentPage) ? classes.selectedPage : ''}>{p}</span>)}
             </div>

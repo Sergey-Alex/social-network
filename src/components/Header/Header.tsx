@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Header.module.css'
 import {NavLink} from "react-router-dom";
-import {authTC} from "../../redux/auth-reducers";
+
 
 type DataType = {
     id: number | null

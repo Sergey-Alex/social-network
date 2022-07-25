@@ -3,11 +3,10 @@ import Header from "./Header";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {authTC, setAuthUserData} from "../../redux/auth-reducers";
-import {AuthApi} from "../../api/api";
 
 
 
-class HeaderContainer extends Component<HeaderContainerPropsType>{
+class HeaderContainer extends Component<HeaderContainerPropsType> {
 
     componentDidMount() {
         this.props.authTC()
@@ -18,9 +17,10 @@ class HeaderContainer extends Component<HeaderContainerPropsType>{
     }
 
     render() {
-        return <Header data = {this.props.data} isAuth = {this.props.isAuth}/>
+        return <Header data={this.props.data} isAuth={this.props.isAuth}/>
     }
 }
+
 export type AuthDataType = {
     id: number | null
     email: string | null
@@ -28,7 +28,7 @@ export type AuthDataType = {
 }
 
 type MapDispatchPropsType = {
-    setAuthUserData: (id: number, email: string, login: string)=> void
+    setAuthUserData: (id: number, email: string, login: string) => void
     authTC: () => void
 }
 
@@ -39,9 +39,9 @@ type MapStatePropsType = {
     data: AuthDataType
 }
 
-const mapStateToProps = (state:AppStateType): MapStatePropsType => ({
+const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     data: state.auth.data,
     isAuth: state.auth.isAuth,
 })
 
-export default connect(mapStateToProps,{setAuthUserData, authTC})(HeaderContainer);
+export default connect(mapStateToProps, {setAuthUserData, authTC})(HeaderContainer);

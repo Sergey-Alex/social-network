@@ -1,5 +1,7 @@
 import axios from "axios";
 import {UsersType} from "../redux/users-reducer";
+import {ProfileContainerType} from "../components/Profile/ProfileContainer";
+
 
 export type ReturnTypeUsers = {
     items: Array<UsersType>
@@ -30,11 +32,21 @@ export const FollowedApi = {
         const response = await instance.delete<ReturnTypeUsers>(`follow/${id}`)
         return response.data
     },
-    followUser: async (id: number): Promise<ReturnTypeUsers>=> {
+    followUser: async (id: number): Promise<ReturnTypeUsers> => {
         const response = await instance.post<ReturnTypeUsers>(`follow/${id}`)
         return response.data
     }
 }
+
+export const profileApi = {
+    getProfile: async (userId: number): Promise<ProfileContainerType> => {
+        const response = await instance.get<ProfileContainerType>(`profile/${userId}`)
+        return response.data
+    }
+
+}
+
+
 type AuthType = {
     resultCode: number
     messages: [],

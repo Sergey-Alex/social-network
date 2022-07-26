@@ -3,15 +3,17 @@ import classes from './ProfileInfo.module.css'
 import {ProfileContainerType} from "../ProfileContainer";
 import Preloader from "../../common/preloader/Preloader";
 import searchWorkIcon from '../../../assets/images/looking-for-job.svg'
+
 type ProfileInfoType = {
     profile: ProfileContainerType
+
 }
 
 
 const ProfileInfo = (props: ProfileInfoType) => {
-    if (!props.profile){
-        return <Preloader/>
-    }
+    if (!props.profile) return <Preloader/>
+
+
     return (
         <div>
             <img

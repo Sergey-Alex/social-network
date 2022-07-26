@@ -3,7 +3,7 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {getProfileTC} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 
 
 type Contacts = {
@@ -28,12 +28,14 @@ export type ProfileContainerType = {
     }
     userId: number
 
+
 }
 type MapStateToPropsType = {
     profile: ProfileContainerType | null
+    isAuth: boolean
+
 }
 type mapDispatchToProps = {
-    setUserProfile: (profile: ProfileContainerType) => void
     getProfileTC: (id: number) => void
 }
 
@@ -48,19 +50,17 @@ type CommonPropsType = RouteComponentProps<PathParamType> & OwnProfilePageType
 class ProfileContainer extends Component<CommonPropsType> {
 
     componentDidMount() {
+
         let userId = +this.props.match.params.userId
         if (!userId) {
             userId = 2
         }
         this.props.getProfileTC(userId)
-
-        // axios.get<ProfileContainerType>(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-        //     .then(res => {
-        //         this.props.setUserProfile(res.data)
-        //     })
     }
 
     render() {
+      //  debugger
+        if (!this.props.isAuth) return <Redirect to={'/login'}/>
         return (
             <div>
                 {this.props.profile && <Profile profile={this.props.profile}/>}
@@ -70,7 +70,8 @@ class ProfileContainer extends Component<CommonPropsType> {
 }
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    isAuth: state.auth.isAuth
 })
 
 let withRouterProfileContainer = withRouter(ProfileContainer)

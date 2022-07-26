@@ -1,12 +1,8 @@
 import React from 'react';
-
 import {AddPostAC, ChangeNewTextAC, PostDataTypes} from "../../../redux/profile-reducer";
-
 import {AppStateType} from "../../../redux/redux-store";
-
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
-import Profile from "../Profile";
 import MyPost from "./MyPost";
 
 
@@ -16,8 +12,6 @@ import MyPost from "./MyPost";
 //     dispatch: (action: ActionsType) => void
 //     store: StoreType
 // }
-
-
 
 
     // return <StoreContext.Consumer>
@@ -37,7 +31,6 @@ import MyPost from "./MyPost";
     //         }
     //     }
     //     </StoreContext.Consumer>
-
 
 type MapStatePropsType = {
     message: string

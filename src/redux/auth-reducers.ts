@@ -44,24 +44,14 @@ const authReducer = (state: InitialStateType = initialState, action: ActionsType
     }
 
 }
-// const authMe = async () => {
-//     try {
-//         const response = await AuthApi.authMe()
-//         if (response.resultCode === 0){
-//             //...что то делаем
-//         } else {
-//             // делаем что то еще
-//         }
-//     }catch(err) {
-//         throw new Error(err.data.message[0])
-//     }
-// }
 
 export const authTC = () => {
     return (dispatch: Dispatch<ActionsTypeAuth>) => {
         AuthApi.authMe().then((res) => {
             let {id, email, login} = res.data
-            dispatch(setAuthUserData(id, email, login))
+            if (res.resultCode === 0){
+                dispatch(setAuthUserData(id, email, login))
+            }
         })
     }
 }

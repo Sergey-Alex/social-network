@@ -10,7 +10,6 @@ import {
 import {AppStateType} from "../../redux/redux-store";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
-import {userApi} from "../../api/api";
 
 
 type MapStatePropsType = {
@@ -28,25 +27,10 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
-        // this.props.setToggleIsFetching(true)
-        //     userApi.getUsers(this.props.currentPage, this.props.pageSize).then((res) => {
-        //         this.props.setToggleIsFetching(false)
-        //         this.props.setUsers(res.items);
-        //         this.props.setTotalUserCount(-res.totalCount)
-        //     })
-
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.getUsers(pageNumber, this.props.pageSize)
-
-        // this.props.setCurrentPage(pageNumber)
-        // this.props.setToggleIsFetching(true)
-        //     userApi.getUsers(pageNumber, this.props.pageSize).then((res) => {
-        //         this.props.setToggleIsFetching(false)
-        //         this.props.setUsers(res.items)
-        //     })
-
 
     }
 
@@ -97,30 +81,6 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 
 }
-
-// let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-//     return {
-//         Follow: (userId: number) => {
-//             dispatch(Follow(userId))
-//         },
-//         unFollow: (userId) => {
-//             dispatch(unFollowAC(userId))
-//         },
-//         setUsers: (users) => {
-//             dispatch(setUsers(users))
-//         },
-//         setCurrentPage: (currentPage) => {
-//             dispatch(setCurrentPage(currentPage))
-//         },
-//         setTotalUserCount: (totalUsers) => {
-//             dispatch(setTotalUserCount(totalUsers))
-//         },
-//         toggleIsFetching: (isFetching) => {
-//             dispatch(setToggleIsFetching(isFetching))
-//         }
-//     }
-//
-// }
 
 export default connect(mapStateToProps, {
     Follow: followSuccess,

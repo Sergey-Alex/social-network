@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, ReactElement} from 'react';
 import classes from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DiaologItem";
 import {Message} from "./Message/Message";
@@ -24,7 +24,7 @@ type DialogsTypeProps = {
 }
 
 
-const Dialogs = (props: DialogsTypeProps) => {
+const Dialogs = (props: DialogsTypeProps): ReactElement => {
 
     let dialogs = props.dialogsData.map(d => <DialogItem key={d.id} name={d.name} id={d.id}/>)
     let messages = props.message.map(m => <Message key={m.id} textMessage={m.textMessage} id={m.id}/>)
@@ -38,7 +38,7 @@ const Dialogs = (props: DialogsTypeProps) => {
 
     }
    // debugger
-        if(!props.isAuth) return <Redirect to={'/Login'}/>
+      //  if(!props.isAuth) return <Redirect to={'/Login'}/>
 
     return (
         <div className={classes.dialogs}>
@@ -57,5 +57,7 @@ const Dialogs = (props: DialogsTypeProps) => {
         </div>
     );
 };
+
+
 
 export default Dialogs;

@@ -1,37 +1,54 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 
 type ProfileStatusType = {
     status: string
+    updateStatus: (st: string) =>void
 }
 
 
 class ProfileStatus extends React.Component<ProfileStatusType> {
 
     state = {
-        editMode: false
+        editMode: false,
+        status: this.props.status
       //  onChange:
     }
     activateMode = () => {
        this.setState({
            editMode: !this.state.editMode
        })
+        this.props.updateStatus(this.state.status)
     }
+    onStatusChange = (e: ChangeEvent<HTMLInputElement>)=> {
+        this.setState({
+            status: e.currentTarget.value
+        })
+    }
+
+   componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<{}>) {
+        if (prevProps.status !== this.props.status){
+            this.setState({
+                status: this.props.status
+            })
+        }
+   }
+
 
     render() {
         return (
             <div>
                 {!this.state.editMode &&
                     <div>
-                        <span onDoubleClick={this.activateMode.bind(this)}>{this.props.status}</span>
+                        <span onDoubleClick={this.activateMode}>{this.props.status}</span>
                     </div>}
                 { this.state.editMode &&<div>
-                    <input autoFocus onBlur={this.activateMode.bind(this)}  value = {this.props.status}/>
+                    <input onChange={this.onStatusChange}  autoFocus onBlur={this.activateMode}  value = {this.state.status}/>
                 </div>}
             </div>
         );
     }
 
 
-};
+}
 
 export default ProfileStatus;

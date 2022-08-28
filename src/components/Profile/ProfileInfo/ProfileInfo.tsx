@@ -8,7 +8,8 @@ import ProfileStatus from './ProfileStatus'
 
 type ProfileInfoType = {
     profile: ProfileContainerType
-
+    status: string
+    updateStatus: (status: string) => void
 }
 
 
@@ -32,7 +33,8 @@ const ProfileInfo = (props: ProfileInfoType) => {
                     <div>{props.profile.lookingForAJob}</div>
                     <div>{props.profile.lookingForAJobDescription}</div>
                <span>Статус поиска работы :</span> {props.profile.lookingForAJob && <img src={searchWorkIcon} alt={'search work'} style={{height:'50px'}}/>}
-                <ProfileStatus status='Hello its my status'/>
+                <ProfileStatus updateStatus={props.updateStatus} status='Hello !!'/>
+                    <div>{props.status}</div>
             </div>
         </div>
 

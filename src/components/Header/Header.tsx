@@ -13,7 +13,7 @@ type DataType = {
 
 type HeaderPropsType = {
     data: DataType,
-    isAuth: boolean
+   isAuth: boolean | null
 
 }
 

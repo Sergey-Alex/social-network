@@ -33,28 +33,29 @@ import MyPost from "./MyPost";
     //     </StoreContext.Consumer>
 
 type MapStatePropsType = {
-    message: string
-    messageForNewPost: string
+    // message: string
+    // messageForNewPost: string
     postData: Array<PostDataTypes>
 }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        messageForNewPost: state.profilePage.messageForNewPost,
+        // messageForNewPost: state.profilePage.messageForNewPost,
         postData: state.profilePage.postData,
-        message: state.profilePage.messageForNewPost
+        //     message: state.profilePage.messageForNewPost
+        // }
     }
 }
 
 type MapDispatchPropsType = {
-    addPostHandlerContainer: () => void
+    addPostHandlerContainer: (values: string) => void
     changeTextHandlerContainer: (text: string) => void
 }
 
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        addPostHandlerContainer: () => {
-            dispatch(AddPostAC())
+        addPostHandlerContainer: (values) => {
+            dispatch(AddPostAC(values))
         },
         changeTextHandlerContainer: (text: string) => {
             dispatch(ChangeNewTextAC(text))
@@ -62,4 +63,4 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     }
 }
 
-export const  MyPostContainer = connect(mapStateToProps, mapDispatchToProps)(MyPost);
+export const  MyPostContainer = connect(mapStateToProps, mapDispatchToProps)(MyPost)

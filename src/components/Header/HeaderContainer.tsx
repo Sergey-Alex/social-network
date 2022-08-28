@@ -31,7 +31,7 @@ type MapDispatchPropsType = {
 type HeaderContainerPropsType = MapStatePropsType & MapDispatchPropsType
 
 type MapStatePropsType = {
-    isAuth: boolean
+   isAuth: boolean | null
     data: AuthDataType
 }
 

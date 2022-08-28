@@ -1,15 +1,43 @@
 import React from 'react';
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {useDispatch} from "react-redux";
+import {loginMeTc} from "../../redux/auth-reducers";
 
-type LoginPropsType = {
 
-}
+const Login = () => {
+    const dispatch = useDispatch()
+    const onSubmit = (formData: FormDataType) => {
+        dispatch(loginMeTc(formData.login, formData.password, formData.rememberMe))
+    }
 
-const Login = (props: LoginPropsType) => {
-    return (
+    return <div>
         <h1>
             LOGIN
         </h1>
-    );
+        <LoginReduxForm onSubmit={onSubmit}/>
+    </div>;
 };
+export default Login
+type FormDataType = {
+    login: string
+    password: string
+    rememberMe: boolean
+}
 
-export default Login;
+
+const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+
+    return (
+        <div>
+            <form onSubmit={props.handleSubmit}>
+                <Field placeholder={'login'} name={'login'} component={'input'} type={'text'}/>
+                <Field placeholder={'Password'} name={'password'} component={'input'}/>
+                <Field name={'rememberMe'} component={'input'} type={'Checkbox'}/>
+                <button>Login</button>
+            </form>
+        </div>
+
+    )
+}
+
+const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)

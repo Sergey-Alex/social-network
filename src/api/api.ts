@@ -38,13 +38,32 @@ export const FollowedApi = {
     }
 }
 
+type SubTypeStatus = {
+    status: string
+}
+
+type StatusType = {
+    resultCode: number
+    messages: Array<string>
+    data: SubTypeStatus
+}
+
 export const profileApi = {
     getProfile: async (userId: number): Promise<ProfileContainerType> => {
         const response = await instance.get<ProfileContainerType>(`profile/${userId}`)
         return response.data
+    },
+    getStatus: async (userId: number): Promise<string> => {
+        const response = await instance.get<string>(`profile/status/${userId}`)
+        return response.data
+    },
+    updateStatus: async  (status: string): Promise<StatusType> => {
+        const res = await instance.put<StatusType>(`profile/status`, {status: status})
+        return res.data
     }
 
 }
+
 
 
 type AuthType = {
@@ -56,10 +75,21 @@ type AuthType = {
         login: string
     }
 }
+type LoginMeType = {
+    resultCode: 0
+    messages: [],
+    data: {
+        userId: number
+    }
+}
 
 export const AuthApi = {
     authMe: async (): Promise<AuthType> => {
         const response = await instance.get<AuthType>(`auth/me`)
         return response.data
+    },
+    loginMe: async (email:string, password: string, rememberMe: boolean): Promise<LoginMeType> => {
+        const response = await instance.post<LoginMeType>(`/auth/login`, {email, password, rememberMe})
+        return  response.data
     }
 }

@@ -2,6 +2,8 @@ import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {useDispatch} from "react-redux";
 import {loginMeTc} from "../../redux/auth-reducers";
+import {Input} from "../common/FormsControls/FormsControls";
+import {required} from "../../utils/validators/validators";
 
 
 const Login = () => {
@@ -30,9 +32,13 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
         <div>
             <form onSubmit={props.handleSubmit}>
-                <Field placeholder={'login'} name={'login'} component={'input'} type={'text'}/>
-                <Field placeholder={'Password'} name={'password'} component={'input'}/>
-                <Field name={'rememberMe'} component={'input'} type={'Checkbox'}/>
+                <Field placeholder={'login'} name={'login'}
+                       component={Input}
+                       type={'text'}
+                       validate = {[required]}
+                />
+                <Field placeholder={'Password'} name={'password'} component={Input} validate = {[required]}/>
+                <Field name={'rememberMe'} component={'input'} type={'Checkbox'} validate = {[required]}/>
                 <button>Login</button>
             </form>
         </div>

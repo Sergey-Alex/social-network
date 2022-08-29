@@ -67,7 +67,6 @@ export const loginMeTc = (login: string, password:string, rememberMe:boolean) =>
     return (dispatch: Dispatch<ActionsTypeAuth>) => {
         AuthApi.loginMe(login, password, rememberMe).then((res)=>{
             console.log(res.data)
-
         })
     }
 }

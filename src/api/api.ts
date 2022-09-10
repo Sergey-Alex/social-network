@@ -68,28 +68,36 @@ export const profileApi = {
 
 type AuthType = {
     resultCode: number
-    messages: [],
+    messages: string[]
     data: {
-        id: number,
-        email: string,
+        id: number
+        email: string
         login: string
     }
 }
-type LoginMeType = {
-    resultCode: 0
-    messages: [],
-    data: {
-        userId: number
-    }
+
+type LoginMePostResponseType = {
+    data: {userId: number}
+    resultCode: number
+    message: string
+}
+type LoginMePostRequestType = {
+    rememberMe: boolean
+    email: string
+    password: string
 }
 
 export const AuthApi = {
-    authMe: async (): Promise<AuthType> => {
+    authMe: async () => {
         const response = await instance.get<AuthType>(`auth/me`)
         return response.data
     },
-    loginMe: async (email:string, password: string, rememberMe: boolean): Promise<LoginMeType> => {
-        const response = await instance.post<LoginMeType>(`/auth/login`, {email, password, rememberMe})
+    loginMe: async (email:string, password: string, rememberMe: boolean ): Promise<LoginMePostResponseType> => {
+        const response = await instance.post<LoginMePostResponseType>(`auth/login`, {email, password, rememberMe})
         return  response.data
+    },
+    logoutMe: async () => {
+        const res  = await instance.delete<LoginMePostResponseType>(`auth/login`)
+        return res.data
     }
 }

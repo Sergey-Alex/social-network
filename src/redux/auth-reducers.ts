@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {AuthApi} from "../api/api";
+import {AppThunk} from "./redux-store";
 
 export type ActionsTypeAuth = ReturnType<typeof setAuthUserData> | ReturnType<typeof loginMeAC>
 
@@ -10,8 +11,8 @@ export const setAuthUserData = (id: number, email: string, login: string) => {
     return {type: SET_USER_DATA, data: {id, email, login}} as const
 }
 
-export const loginMeAC = (email: string, password: string, rememberMe: boolean)=>{
-    return {type: LOGIN, email, password, rememberMe} as const
+export const loginMeAC = (login: string, password: string, rememberMe: boolean)=>{
+    return {type: LOGIN, login, password, rememberMe} as const
 }
 type DataType = {
     id: number
@@ -52,8 +53,8 @@ const authReducer = (state: InitialStateType = initialState, action: ActionsType
 
 }
 
-export const authTC = () => {
-    return (dispatch: Dispatch<ActionsTypeAuth>) => {
+export const authTC = (): AppThunk => {
+    return (dispatch) => {
         AuthApi.authMe().then((res) => {
             let {id, email, login} = res.data
             if (res.resultCode === 0){
@@ -63,10 +64,13 @@ export const authTC = () => {
     }
 }
 
-export const loginMeTc = (login: string, password:string, rememberMe:boolean) => {
-    return (dispatch: Dispatch<ActionsTypeAuth>) => {
-        AuthApi.loginMe(login, password, rememberMe).then((res)=>{
-            console.log(res.data)
+export const loginMeTc = (login: string, password:string, rememberMe:boolean) :AppThunk => {
+    return (dispatch) => {
+        AuthApi.loginMe(login, password, rememberMe)
+            .then((res)=>{
+          if (res.resultCode === 0){
+
+          }
         })
     }
 }

@@ -5,7 +5,7 @@ export type MessageTypeText = {
     textMessage: string
 }
 
-export type ActionsType =
+export type DialogsActionsType =
     ReturnType<typeof AddPostAC>
     | ReturnType<typeof ChangeNewTextAC>
     | ReturnType<typeof addMessageDialogAC>
@@ -49,7 +49,7 @@ let initialState: InitialStateType  = {
 
 }
 
-const dialogsReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+const dialogsReducer = (state: InitialStateType = initialState, action: DialogsActionsType): InitialStateType => {
 
     switch (action.type) {
         case ADD_MESSAGE:

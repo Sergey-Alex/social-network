@@ -35,7 +35,7 @@ export const toggleIsFollowingProgress = (isFollowingProgress: boolean, userId: 
     return {type: TOGGLE_IS_FOLLOWING_IN_PROGRESS, isFollowingProgress, userId} as const
 }
 
-type UsersActionType =
+export type UsersActionType =
     ReturnType<typeof followSuccess>
     | ReturnType<typeof unFollowSuccess>
     | ReturnType<typeof setUsers>

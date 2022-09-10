@@ -9,7 +9,8 @@ import {required} from "../../utils/validators/validators";
 const Login = () => {
     const dispatch = useDispatch()
     const onSubmit = (formData: FormDataType) => {
-        dispatch(loginMeTc(formData.login, formData.password, formData.rememberMe))
+        // dispatch(loginMeTc(formData.login, formData.password, formData.rememberMe))
+        console.log(formData)
     }
 
     return <div>

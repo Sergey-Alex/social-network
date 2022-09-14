@@ -78,7 +78,7 @@ type AuthType = {
 type LoginMeOwn<T = {}> = {
     data: T
     resultCode: number
-    message: string
+    messages: string
 }
 
 type LoginMePostRequestType = {

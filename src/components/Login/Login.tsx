@@ -50,6 +50,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                 />
                 <Field placeholder={'Password'} type={'password'} name={'password'} component={Input} validate = {[required]}/>
                 <Field name={'rememberMe'} component={'input'} type={'Checkbox'}/>
+                <div style={{color: 'blueviolet'}}>{props.error}</div>
                 <button>Login</button>
             </form>
         </div>

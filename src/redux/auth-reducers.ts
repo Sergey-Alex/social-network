@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {AuthApi, TypeArgsLogin} from "../api/api";
 import {AppThunk} from "./redux-store";
+import {stopSubmit} from "redux-form";
 
 export type ActionsTypeAuth = ReturnType<typeof setAuthUserData>
 
@@ -67,8 +68,13 @@ export const loginMeTc = (data: TypeArgsLogin): AppThunk => {
     return (dispatch) => {
         AuthApi.loginMe(data)
             .then((res) => {
+                console.log(res)
                 if (res.resultCode === 0) {
                     dispatch(authTC())
+                } else {
+                   let message = res.messages.length > 0 ? res.messages : 'some err'
+                    let action: any = stopSubmit('login', {_error: message})
+                    dispatch(action)
                 }
             })
     }

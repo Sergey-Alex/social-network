@@ -102,16 +102,3 @@ export default compose<React.ComponentType>(
 )(UsersContainer)
 
 
-
-// connect(mapStateToProps, {
-//     Follow: followSuccess,
-//     unFollow: unFollowSuccess,
-//     setUsers,
-//     setCurrentPage,
-//     setTotalUserCount,
-//     setToggleIsFetching,
-//     toggleIsFollowingProgress,
-//     getUsers: getUsersThunkCreator,
-//     followTC,
-//     unFollowTC
-// })(withAuthRedirect(UsersContainer))

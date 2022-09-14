@@ -1,18 +1,26 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginMeTc} from "../../redux/auth-reducers";
 import {Input} from "../common/FormsControls/FormsControls";
 import {required} from "../../utils/validators/validators";
+import {AppStateType} from "../../redux/redux-store";
+import {Redirect} from "react-router-dom";
 
 
 const Login = () => {
     const dispatch = useDispatch()
+    const isAuth = useSelector<AppStateType, boolean >(state => state.auth.isAuth)
+    const userId = useSelector<AppStateType, number |null>(state => state.auth.data.id)
+
     const onSubmit = (formData: FormDataType) => {
-        // dispatch(loginMeTc(formData.login, formData.password, formData.rememberMe))
-        console.log(formData)
+        dispatch(loginMeTc({email: formData.login, password: formData.password, rememberMe:formData.rememberMe}))
     }
 
+
+    if (isAuth){
+        return <Redirect to={`/profile/${userId}`}/>
+    }
     return <div>
         <h1>
             LOGIN
@@ -21,6 +29,8 @@ const Login = () => {
     </div>;
 };
 export default Login
+
+
 type FormDataType = {
     login: string
     password: string
@@ -38,8 +48,8 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                        type={'text'}
                        validate = {[required]}
                 />
-                <Field placeholder={'Password'} name={'password'} component={Input} validate = {[required]}/>
-                <Field name={'rememberMe'} component={'input'} type={'Checkbox'} validate = {[required]}/>
+                <Field placeholder={'Password'} type={'password'} name={'password'} component={Input} validate = {[required]}/>
+                <Field name={'rememberMe'} component={'input'} type={'Checkbox'}/>
                 <button>Login</button>
             </form>
         </div>

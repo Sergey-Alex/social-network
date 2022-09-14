@@ -1,6 +1,7 @@
 import {AuthApi, FollowedApi, userApi} from "../api/api";
 import {Dispatch} from "redux";
 import {AuthDataType} from "../components/Header/HeaderContainer";
+import {AppThunk} from "./redux-store";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -111,8 +112,8 @@ const usersReducers = (state: InitialStateType = initialState, action: UsersActi
     }
 }
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
-    return (dispatch: Dispatch<UsersActionType>) => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number): AppThunk => {
+    return (dispatch) => {
         dispatch(setToggleIsFetching(true))
         userApi.getUsers(currentPage, pageSize).then((res) => {
             dispatch(setToggleIsFetching(false))
@@ -123,8 +124,8 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
     }
 }
 
-export const followTC = (id: number) => {
-    return (dispatch: Dispatch<UsersActionType>) => {
+export const followTC = (id: number): AppThunk => {
+    return (dispatch) => {
         dispatch(toggleIsFollowingProgress(true, id))
         FollowedApi.followUser(id).then((res) => {
            dispatch(followSuccess(id))
@@ -133,8 +134,8 @@ export const followTC = (id: number) => {
     }
 }
 
-export const unFollowTC = (id: number) => {
-    return (dispatch: Dispatch<UsersActionType>) => {
+export const unFollowTC = (id: number): AppThunk => {
+    return (dispatch) => {
         dispatch(toggleIsFollowingProgress(true, id))
         FollowedApi.unFollowUser(id).then((res) => {
           dispatch(unFollowSuccess(id))

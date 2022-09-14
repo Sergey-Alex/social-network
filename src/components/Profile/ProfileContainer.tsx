@@ -61,7 +61,6 @@ class ProfileContainer extends Component<CommonPropsType> {
         }
         this.props.getProfileTC(userId)
         this.props.getStatusTC(userId)
-        this.props.UpdateStatusTC(this.props.status)
     }
 
     render() {

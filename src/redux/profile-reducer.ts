@@ -3,6 +3,7 @@ import {addMessageDialogAC} from "./dialogs-reducer";
 import {ProfileContainerType} from "../components/Profile/ProfileContainer";
 import {Dispatch} from "redux";
 import {profileApi} from "../api/api";
+import {AppThunk} from "./redux-store";
 
 
 export type PostDataTypes = {
@@ -74,16 +75,16 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsP
     }
 }
 
-export const getProfileTC = (userId: number) => {
-    return (dispatch: Dispatch) => {
+export const getProfileTC = (userId: number) :AppThunk => {
+    return (dispatch) => {
         profileApi.getProfile(userId).then((res) => {
             dispatch(setUserProfile(res))
         })
     }
 }
 
-export const getStatusTC = (userId: number) => {
-    return (dispatch: Dispatch) => {
+export const getStatusTC = (userId: number): AppThunk => {
+    return (dispatch) => {
         profileApi.getStatus(userId).then((res) => {
             dispatch(setStatusAC(res))
         })

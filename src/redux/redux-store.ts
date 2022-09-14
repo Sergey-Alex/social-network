@@ -21,6 +21,7 @@ const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 window.store = store
 //export type StoreType = typeof store
 
+
 export type AppActionsType = ActionsTypeAuth | UsersActionType |  DialogsActionsType | ActionsProfileType
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionsType>
 export type AppStateType = ReturnType<typeof reducer>

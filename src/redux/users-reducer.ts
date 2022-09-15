@@ -112,10 +112,11 @@ const usersReducers = (state: InitialStateType = initialState, action: UsersActi
     }
 }
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number): AppThunk => {
+export const getUsersThunkCreator = (page: number, pageSize: number): AppThunk => {
     return (dispatch) => {
         dispatch(setToggleIsFetching(true))
-        userApi.getUsers(currentPage, pageSize).then((res) => {
+        dispatch(setCurrentPage(page))
+        userApi.getUsers(page, pageSize).then((res) => {
             dispatch(setToggleIsFetching(false))
             dispatch(setUsers(res.items));
             dispatch(setTotalUserCount(res.totalCount))

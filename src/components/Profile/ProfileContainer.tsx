@@ -4,9 +4,7 @@ import {connect} from "react-redux";
 import {getProfileTC, getStatusTC, UpdateStatusTC} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
-import {AuthInitialStateType} from "../../redux/auth-reducers";
 
 
 type Contacts = {

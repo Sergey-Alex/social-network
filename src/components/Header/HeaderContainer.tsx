@@ -7,9 +7,7 @@ import {authTC, loginOutTC} from "../../redux/auth-reducers";
 
 
 class HeaderContainer extends Component<HeaderContainerPropsType> {
-    componentDidMount() {
-        this.props.authTC()
-    }
+
 
     render() {
         return <Header data={this.props.data} isAuth={this.props.isAuth} loginOutTC = {this.props.loginOutTC}/>
@@ -24,7 +22,7 @@ export type AuthDataType = {
 
 type MapDispatchPropsType = {
  //   setAuthUserData: (id: number, email: string, login: string) => void
-    authTC: () => void
+   // authTC: () => void
     loginOutTC: () => void
 }
 
@@ -40,4 +38,4 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     isAuth: state.auth.isAuth,
 })
 
-export default connect(mapStateToProps, {authTC, loginOutTC})(HeaderContainer);
+export default connect(mapStateToProps, {loginOutTC})(HeaderContainer);

@@ -6,6 +6,7 @@ import {AppStateType} from "../../redux/redux-store";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {AuthInitialStateType} from "../../redux/auth-reducers";
 
 
 type Contacts = {
@@ -32,15 +33,16 @@ export type ProfileContainerType = {
 
 }
 type MapStateToPropsType = {
-    profile: ProfileContainerType | null,
+    profile: ProfileContainerType | null
     status: string
-    //isAuth: boolean
+    autorizedUserId: number
+    isAuth: boolean
 
 }
 type mapDispatchToProps = {
     getProfileTC: (id: number) => void
     getStatusTC: (id: number) => void
-    UpdateStatusTC:(status: string) => void
+    UpdateStatusTC: (status: string) => void
 }
 
 type PathParamType = {
@@ -57,20 +59,23 @@ class ProfileContainer extends Component<CommonPropsType> {
 
         let userId = +this.props.match.params.userId
         if (!userId) {
-            userId = 3
+            userId = this.props.autorizedUserId
+            if (!userId){
+                this.props.history.push('/login')
+            }
         }
         this.props.getProfileTC(userId)
         this.props.getStatusTC(userId)
     }
 
     render() {
-      //  debugger
-   //     if (!this.props.isAuth) return <Redirect to={'/login'}/>
+        //  debugger
+        //     if (!this.props.isAuth) return <Redirect to={'/login'}/>
         return (
             <div>
                 {this.props.profile && <Profile profile={this.props.profile}
-                                                status = {this.props.status}
-                                                updateStatus ={this.props.UpdateStatusTC}
+                                                status={this.props.status}
+                                                updateStatus={this.props.UpdateStatusTC}
                 />}
             </div>
         );
@@ -87,12 +92,15 @@ class ProfileContainer extends Component<CommonPropsType> {
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    autorizedUserId: state.auth.data.id,
+    isAuth: state.auth.isAuth
+
 })
 
-export  default  compose<React.ComponentType>(
+export default compose<React.ComponentType>(
     withRouter,
-    withAuthRedirect,
+  //  withAuthRedirect,
     connect(mapStateToProps, {
         getProfileTC,
         getStatusTC,

@@ -14,16 +14,14 @@ let mapStateToPropsForRedirect = (state: AppStateType): mapStateToPropsForRedire
 
 export function withAuthRedirect<T>(Component: ComponentType<T>) {
 
-    function RedirectComponent(props: mapStateToPropsForRedirectType & {authTC: () => void}) {
+    function RedirectComponent(props: mapStateToPropsForRedirectType & { authTC: () => void }) {
         let {isAuth, authTC, ...restProps} = props
         if (isAuth === null) {
             authTC()
-        }else if (!isAuth) return <Redirect to={'/login'}/>
+        } else if (!isAuth) return <Redirect to={'/login'}/>
 
         return <Component {...restProps as T} />
     }
-
-
     // @ts-ignore
     return connect(mapStateToPropsForRedirect, {authTC})(RedirectComponent)
 }

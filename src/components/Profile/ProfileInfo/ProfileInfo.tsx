@@ -3,7 +3,7 @@ import classes from './ProfileInfo.module.css'
 import {ProfileContainerType} from "../ProfileContainer";
 import Preloader from "../../common/preloader/Preloader";
 import searchWorkIcon from '../../../assets/images/looking-for-job.svg'
-import ProfileStatus from './ProfileStatus'
+import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 
 
 type ProfileInfoType = {
@@ -33,7 +33,7 @@ const ProfileInfo = (props: ProfileInfoType) => {
                     <div>{props.profile.lookingForAJob}</div>
                     <div>{props.profile.lookingForAJobDescription}</div>
                <span>Статус поиска работы :</span> {props.profile.lookingForAJob && <img src={searchWorkIcon} alt={'search work'} style={{height:'50px'}}/>}
-                <ProfileStatus updateStatus={props.updateStatus} status='Hello !!'/>
+                <ProfileStatusWithHooks updateStatus={props.updateStatus} status='Hello !!'/>
                     <div>{props.status}</div>
             </div>
         </div>

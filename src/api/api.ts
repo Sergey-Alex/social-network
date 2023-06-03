@@ -38,6 +38,23 @@ export const FollowedApi = {
     }
 }
 
+
+
+export const AuthApi = {
+    authMe: async () => {
+        const response = await instance.get<AuthType>(`auth/me`)
+        return response.data
+    },
+    loginMe: async (data: TypeArgsLogin) => {
+        const response = await instance.post<LoginMeOwn<{ userId: number }>>(`auth/login`, data)
+        return response.data
+    },
+    logoutMe: async () => {
+        const response = await instance.delete<LoginMeOwn>(`auth/login`)
+        return response.data
+    }
+}
+
 type SubTypeStatus = {
     status: string
 }
@@ -90,19 +107,4 @@ export type TypeArgsLogin = {
     rememberMe: boolean
     email: string
     password: string
-}
-
-export const AuthApi = {
-    authMe: async () => {
-        const response = await instance.get<AuthType>(`auth/me`)
-        return response.data
-    },
-    loginMe: async (data: TypeArgsLogin) => {
-        const response = await instance.post<LoginMeOwn<{ userId: number }>>(`auth/login`, data)
-        return response.data
-    },
-    logoutMe: async () => {
-        const response = await instance.delete<LoginMeOwn>(`auth/login`)
-        return response.data
-    }
 }

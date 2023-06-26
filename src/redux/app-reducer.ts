@@ -1,7 +1,4 @@
-import {Dispatch} from "redux";
-import {AuthApi, TypeArgsLogin} from "../api/api";
 import {AppThunk} from "./redux-store";
-import {stopSubmit} from "redux-form";
 import {authTC} from "./auth-reducers";
 
 export type InitializedActionsTypeApp = ReturnType<typeof initializedSuccessAppAC>
@@ -36,8 +33,8 @@ const appReducer = (state: AppInitialStateType = initialState, action: Initializ
 
 }
 
-export const initializedAppTC = (): AppThunk => (dispatch) => {
-    const user = dispatch(authTC())
+export const initializedAppTC = (): AppThunk => async (dispatch) => {
+    const user = await dispatch(authTC())
     Promise.all([user]).then(() => {
         dispatch(initializedSuccessAppAC())
     })

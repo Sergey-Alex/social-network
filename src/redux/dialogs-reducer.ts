@@ -58,8 +58,6 @@ const dialogsReducer = (state: InitialStateType = initialState, action: DialogsA
                 textMessage: action.values
             }
             return {...state,  message: [...state.message, newMessage]}
-        // case CHANGE_NEW_DIALOGS_MESSAGES:
-        //     return {...state}
         default:
             return state
     }

@@ -1,6 +1,5 @@
-import {AuthApi, FollowedApi, userApi} from "../api/api";
+import {FollowedApi, userApi} from "../api/api";
 import {Dispatch} from "redux";
-import {AuthDataType} from "../components/Header/HeaderContainer";
 import {AppThunk} from "./redux-store";
 
 const FOLLOW = 'FOLLOW'
@@ -112,37 +111,45 @@ const usersReducers = (state: InitialStateType = initialState, action: UsersActi
     }
 }
 
-export const getUsersThunkCreator = (page: number, pageSize: number): AppThunk => {
-    return (dispatch) => {
-        dispatch(setToggleIsFetching(true))
-        dispatch(setCurrentPage(page))
-        userApi.getUsers(page, pageSize).then((res) => {
-            dispatch(setToggleIsFetching(false))
-            dispatch(setUsers(res.items));
-            dispatch(setTotalUserCount(res.totalCount))
-
-        })
-    }
+export const getUsersThunkCreator = (page: number, pageSize: number): AppThunk => async (dispatch) => {
+    dispatch(setToggleIsFetching(true))
+    dispatch(setCurrentPage(page))
+    let res = await userApi.getUsers(page, pageSize)
+    dispatch(setToggleIsFetching(false))
+    dispatch(setUsers(res.items));
+    dispatch(setTotalUserCount(res.totalCount))
 }
 
-export const followTC = (id: number): AppThunk => {
-    return (dispatch) => {
-        dispatch(toggleIsFollowingProgress(true, id))
-        FollowedApi.followUser(id).then((res) => {
-           dispatch(followSuccess(id))
-            dispatch(toggleIsFollowingProgress(false, id))
-        })
+const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: any, actionCreator: any) => {
+    dispatch(toggleIsFollowingProgress(true, userId))
+    let res = await apiMethod(userId)
+    if (res.resultCode === 0) {
+        dispatch(actionCreator(userId))
     }
+    dispatch(toggleIsFollowingProgress(false, userId))
 }
 
-export const unFollowTC = (id: number): AppThunk => {
-    return (dispatch) => {
-        dispatch(toggleIsFollowingProgress(true, id))
-        FollowedApi.unFollowUser(id).then((res) => {
-          dispatch(unFollowSuccess(id))
-            dispatch(toggleIsFollowingProgress(false, id))
-        })
-    }
+export const followTC = (id: number): AppThunk => async (dispatch) => {
+    await followUnfollowFlow(dispatch, id, FollowedApi.followUser.bind(FollowedApi), followSuccess)
+    // dispatch(toggleIsFollowingProgress(true, id))
+    // let res = await apiMethod(id)
+    // if (res.resultCode === 0) {
+    //     dispatch(actionCreator(id))
+    // }
+    // dispatch(toggleIsFollowingProgress(false, id))
+    //
+
+}
+
+export const unFollowTC = (id: number): AppThunk => async (dispatch) => {
+    let apiMethod = FollowedApi.unFollowUser.bind(FollowedApi)
+    await followUnfollowFlow(dispatch, id, FollowedApi.unFollowUser.bind(FollowedApi), unFollowSuccess)
+    // dispatch(toggleIsFollowingProgress(true, id))
+    // let res = await apiMethod(id)
+    // if (res.resultCode === 0) {
+    //     dispatch(actionCreator(id))
+    // }
+    // dispatch(toggleIsFollowingProgress(false, id))
 }
 
 

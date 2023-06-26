@@ -13,10 +13,11 @@ export type MyPostsPropsType = {
     addPostHandlerContainer: (values: string) => void
 }
 
-const MyPost = ({
-                    postData,
-                    addPostHandlerContainer,
-                }: MyPostsPropsType) => {
+const MyPost = React.memo((props: MyPostsPropsType) => {
+    let {
+        postData,
+        addPostHandlerContainer,
+    } = props;
 
     let postElement = postData.map(p => <Post key={p.id} message={p.message} likeCount={p.likesCount}/>)
 
@@ -36,7 +37,7 @@ const MyPost = ({
 
         </div>
     );
-};
+});
 
 export default MyPost;
 

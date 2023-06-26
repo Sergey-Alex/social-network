@@ -10,6 +10,12 @@ export type ReturnTypeUsers = {
 
 }
 
+export type FollowUnfollowType<T= {}> = {
+    data: T
+    resultCode: number
+    messages: string[]
+}
+
 
 const instance = axios.create({
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
@@ -28,12 +34,12 @@ export const userApi = {
 }
 
 export const FollowedApi = {
-    unFollowUser: async (id: number): Promise<ReturnTypeUsers> => {
-        const response = await instance.delete<ReturnTypeUsers>(`follow/${id}`)
+    unFollowUser: async (id: number): Promise<FollowUnfollowType> => {
+        const response = await instance.delete<FollowUnfollowType>(`follow/${id}`)
         return response.data
     },
-    followUser: async (id: number): Promise<ReturnTypeUsers> => {
-        const response = await instance.post<ReturnTypeUsers>(`follow/${id}`)
+    followUser: async (id: number): Promise<FollowUnfollowType> => {
+        const response = await instance.post<FollowUnfollowType>(`follow/${id}`)
         return response.data
     }
 }

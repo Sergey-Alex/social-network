@@ -1,6 +1,7 @@
 import {FollowedApi, userApi} from "../api/api";
 import {Dispatch} from "redux";
 import {AppThunk} from "./redux-store";
+import {updateObjectInArray} from "../utils/object-helpers";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -74,33 +75,36 @@ let initialState: InitialStateType = {
 const usersReducers = (state: InitialStateType = initialState, action: UsersActionType): InitialStateType => {
     switch (action.type) {
         case FOLLOW:
+
             return {
-                ...state, users: state.users.map(user => {
-                    if (user.id === action.userId) {
-                        return {...user, followed: true}
-                    }
-                    return user
-                })
+                ...state, users: updateObjectInArray<UsersType, keyof UsersType>(state.users, 'id', action.userId, {followed: true})
+                // state.users.map(user => {
+                // if (user.id === action.userId) {
+                //     return {...user, followed: true}
+                // }
+                // return user
             }
 
-        case UNFOLLOW:
+
+        case
+        UNFOLLOW:
             return {
-                ...state, users: state.users.map(user => {
-                    if (user.id === action.userId) {
-                        return {...user, followed: !user.followed}
-                    }
-                    return user
-                })
+                ...state, users: updateObjectInArray<UsersType, keyof UsersType>(state.users, 'id', action.userId, {followed: false})
             }
-        case SETUSERS:
+        case
+        SETUSERS:
             return {...state, users: action.users}
-        case SET_CURRENT_PAGE:
+        case
+        SET_CURRENT_PAGE:
             return {...state, currentPage: action.currentPage}
-        case SET_TOTAL_USERS_COUNT:
+        case
+        SET_TOTAL_USERS_COUNT:
             return {...state, totalUsersCount: action.totalUsers}
-        case TOGGLE_IS_FETCHING:
+        case
+        TOGGLE_IS_FETCHING:
             return {...state, isFetching: action.isFetching}
-        case TOGGLE_IS_FOLLOWING_IN_PROGRESS:
+        case
+        TOGGLE_IS_FOLLOWING_IN_PROGRESS:
             return {
                 ...state, followingInProgress: action.isFollowingProgress ?
                     [...state.followingInProgress, action.userId]

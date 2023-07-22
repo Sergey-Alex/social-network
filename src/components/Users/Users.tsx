@@ -17,6 +17,7 @@ type UserTypeComponent = {
     followingInProgress: number[]
     followTC: (id: number) => void
     unFollowTC: (id: number) => void
+    portionSize: number
 }
 
 
@@ -29,6 +30,7 @@ const Users = (props: UserTypeComponent) => {
                         pageSize={props.pageSize}
                         totalUsersCount={props.totalUsersCount}
                         currentPage={props.currentPage}
+                        portionSize={props.portionSize}
             />
             {
                 props.users.map((user) => <div className={classes.user} key={user.id}>

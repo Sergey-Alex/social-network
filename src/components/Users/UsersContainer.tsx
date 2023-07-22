@@ -1,16 +1,21 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {
-    followSuccess, followTC, getUsersThunkCreator,
-    setCurrentPage, setToggleIsFetching,
+    followSuccess,
+    followTC,
+    getUsersThunkCreator,
+    setCurrentPage,
+    setToggleIsFetching,
     setTotalUserCount,
-    setUsers, toggleIsFollowingProgress, unFollowSuccess, unFollowTC,
+    setUsers,
+    toggleIsFollowingProgress,
+    unFollowSuccess,
+    unFollowTC,
     UsersType
 } from "../../redux/users-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
-import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {
     currentPage,
@@ -18,6 +23,7 @@ import {
     getUsers,
     isFetching,
     pageSize,
+    portionSize,
     totalUsersCount
 } from "../../redux/users-selector";
 
@@ -29,7 +35,7 @@ type MapStatePropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
-
+    portionSize: number
 }
 
 
@@ -59,6 +65,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
                    followingInProgress={this.props.followingInProgress}
                    followTC={this.props.followTC}
                    unFollowTC={this.props.unFollowTC}
+                   portionSize={this.props.portionSize}
             />
         </>
     }
@@ -87,6 +94,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         currentPage: currentPage(state),
         isFetching: isFetching(state),
         followingInProgress: followingInProgress(state),
+        portionSize: portionSize(state)
 
     }
 

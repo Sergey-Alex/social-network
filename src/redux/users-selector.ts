@@ -22,3 +22,6 @@ export const isFetching = (state: AppStateType) => {
 export const followingInProgress = (state: AppStateType) => {
     return state.usersPage.followingInProgress
 }
+export const portionSize = (state: AppStateType) => {
+    return state.usersPage.portionSize
+}

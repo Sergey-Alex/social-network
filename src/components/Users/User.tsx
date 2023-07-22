@@ -20,7 +20,8 @@ const User = (props: UserTypeComponent) => {
                         <div>
                             <NavLink to={'/profile/' + props.user.id}>
                                  <img className={classes.userPhoto}
-                                      src={props.user.photos.small !== null ? props.user.photos.small : userPhoto} alt=""/>
+                                      src={props.user.photos.small !== null ? props.user.photos.small : userPhoto}
+                                      alt=""/>
                             </NavLink>
                         </div>
                         <div>
@@ -30,28 +31,17 @@ const User = (props: UserTypeComponent) => {
                                               onClick={() => {
                                                   props.unFollowTC(props.user.id)
                                               }}
-                                        // props.toggleIsFollowingProgress(true, user.id)
-                                        // FollowedApi.unFollowUser(user.id).then((res) => {
-                                        //     props.unFollow(user.id)
-                                        //     props.toggleIsFollowingProgress(false, user.id)
-                                        // })
-
                                     >UnFollow</button>
                                     : <button disabled={props.followingInProgress.some(id => id === props.user.id)}
                                               onClick={() => {
                                                   props.followTC(props.user.id)
                                               }}
-                                        // props.toggleIsFollowingProgress(true, user.id)
-                                        // FollowedApi.followUser(user.id).then((res) => {
-                                        //     props.Follow(user.id)
-                                        //     props.toggleIsFollowingProgress(false, user.id)
-                                        // })
                                     >Follow</button>
                             }
 
                         </div>
                     </span>
-                    <span>
+            <span>
                         <span>
                             <div>{props.user.name}</div>
                             <div>{props.user.status}</div>

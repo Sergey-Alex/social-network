@@ -23,7 +23,7 @@ export const Pagination = ({portionSize = 10, ...props}: UserTypeComponent) => {
     let rightPortionPageNumber = portionNumber * portionSize
 
     return (
-        <div>
+        <div className={classes.mainPagint}>
             {portionNumber > 1 && <button onClick={() => setPortionNumber(portionNumber - 1)}>PREV</button>}
             <div>
                 {pages.filter(p => p >= leftPortionNumber && p<=rightPortionPageNumber).map(p=>{

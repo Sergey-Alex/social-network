@@ -5,6 +5,7 @@ import {profileApi} from "../api/api";
 import {AppThunk} from "./redux-store";
 
 
+
 export type PostDataTypes = {
     id: number
     message: string
@@ -17,11 +18,13 @@ export type ActionsProfileType =
     //  | ReturnType<typeof ChangeMessageDialogsAC>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatusAC>
+    | ReturnType<typeof savePhotoSuccessAC>
 
 const ADD_POST = 'ADD-POST'
 const CHANGE_NEW_POST_TEXT = 'CHANGE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
+const CHANGE_PHOTO = 'CHANGE_PHOTO'
 
 export const AddPostAC = (values: string) => {
     return {type: ADD_POST, values} as const
@@ -36,11 +39,13 @@ export const ChangeNewTextAC = (newText: string) => {
 export const setStatusAC = (status: string) => {
     return {type: SET_STATUS, status: status} as const
 }
+export const savePhotoSuccessAC = (file: {small: string, large:string}) => {
+    return {type: CHANGE_PHOTO, file} as const
+}
 
 export type InitialStateType = {
-
     postData: Array<PostDataTypes>
-    profile: ProfileContainerType | null,
+    profile: ProfileContainerType | null | any,
     status: string
 }
 let initialState: InitialStateType = {
@@ -50,7 +55,7 @@ let initialState: InitialStateType = {
         {id: 3, message: 'Hi it work333', likesCount: 200},
 
     ],
-    profile: null,
+    profile: '',
     status: ''
 }
 
@@ -69,6 +74,8 @@ const profileReducer = (state: InitialStateType = initialState, action: ActionsP
             return {...state, profile: action.profile}
         case SET_STATUS:
             return {...state, status: action.status}
+        case CHANGE_PHOTO:
+            return  {...state, profile: {...state.profile, photos:action.file }}
         default:
             return state
     }
@@ -88,6 +95,13 @@ export const UpdateStatusTC = (status: string) => async (dispatch: Dispatch) => 
     let res = await profileApi.updateStatus(status)
     if (res.resultCode === 0) {
         dispatch(setStatusAC(status))
+    }
+}
+export const savePhoto = (photo: string) => async (dispatch: Dispatch) => {
+    let res = await profileApi.savePhoto(photo)
+  //  console.log(typeof(res.data.photos.small))
+    if (res.resultCode === 0) {
+        dispatch(savePhotoSuccessAC(res.data.photos))
     }
 }
 

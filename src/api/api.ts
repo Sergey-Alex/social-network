@@ -10,7 +10,7 @@ export type ReturnTypeUsers = {
 
 }
 
-export type FollowUnfollowType<T= {}> = {
+export type FollowUnfollowType<T = {}> = {
     data: T
     resultCode: number
     messages: string[]
@@ -43,7 +43,6 @@ export const FollowedApi = {
         return response.data
     }
 }
-
 
 
 export const AuthApi = {
@@ -83,6 +82,16 @@ export const profileApi = {
     updateStatus: async (status: string): Promise<StatusType> => {
         const res = await instance.put<StatusType>(`profile/status`, {status: status})
         return res.data
+    },
+    savePhoto: async (photo: string): Promise<sendPhotoType> => {
+        const formData = new FormData();
+        formData.append('file', photo)
+        const res = await instance.put<sendPhotoType>(`profile/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        return res.data
     }
 
 }
@@ -113,4 +122,15 @@ export type TypeArgsLogin = {
     rememberMe: boolean
     email: string
     password: string
+}
+export type sendPhotoType = {
+    resultCode: number
+    messages: string[]
+    data: {
+        photos: {
+            large: string
+            small: string
+        }
+    }
+    fieldsErrors: []
 }
